@@ -1,0 +1,189 @@
+<template>
+    <div class="home">
+        <bscroll class="wrapper" :data="lizedList">
+            <div class="home-Conent">
+                <div class="decorate"></div>
+
+                <div class="home-swiper">
+                    <swiper :options="swiperOption" ref="mySwiper">
+                        <swiper-slide v-for="(ba,i) in bannerList" :key="i">
+                            <img class="swiper-image" :src="ba.imageUrl" >
+                        </swiper-slide>
+
+                        <div class="swiper-pagination "  slot="pagination"></div>
+                    </swiper> 
+                </div>
+
+                <div class="mmen">
+                    <div class="mmen-title"><h3>推荐歌单</h3></div>
+                    <div class="mmen-list">
+                        <div class="mmen-list-view" v-for="(lz,i) in lizedList" :key="i">
+                            <img v-lazy="lz.picUrl" :alt="lz.name">
+                            <div class="mmen-list-name">
+                                <p v-html="lz.name"></p>
+                            </div>
+                            <p class="mmen-icon">
+                                <i class="iconfont icon-erji"></i>
+                                {{lz.playCount | nau}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+        </bscroll>
+    </div>
+</template>
+
+<script>
+import bscroll from '../base/bscorll'
+
+export default {
+    data() {
+        return {
+            //轮播图数据
+            bannerList: [],
+            //轮播图配置
+            swiperOption: {
+                loop: false,
+                observer:true,
+                observeParents:true,
+                autoplay:true,
+                pagination: {   
+                    el: '.swiper-pagination',
+                    clickable :true
+                }
+            },
+            //推荐歌单数据
+            lizedList: []
+        }
+    },
+    methods: {
+        async _getbanner() {
+            let res = await this.api.getbanner()
+
+            console.log(res)
+            this.bannerList = res.banners
+        },
+        async _getlized() {
+            let res = await this.api.getlized()
+
+            console.log(res)
+            this.lizedList = res.result
+        }
+    },
+    filters: {
+        nau(val) {
+            if (val < 10000) return '1万'
+            if (val > 99999999) return '9999万+'
+            return parseInt(val/10000) + '万'
+        }
+    },
+    components: {
+        bscroll
+    },
+    created() {
+        this._getbanner()
+        this._getlized()
+    },
+    mounted() {
+        
+    }
+}
+</script>
+
+
+<style scoped>
+.home {
+    width: 100%;
+    height: calc(100vh - 88px);
+    overflow: hidden;
+}
+
+.home .wrapper {
+    height: 100%;
+}
+
+.home .decorate {
+    position: absolute;
+    top: -33vh;
+    z-index: -10;
+    background: #e24d37;
+    width: 100%;
+    height: 50vh;
+    vertical-align: inherit;
+}
+
+.home-Conent {
+    min-height: 110%;
+}
+
+
+/**轮播图************************************/
+.home-swiper {
+    margin: 0 .16rem;
+}
+
+.home-swiper .swiper-image {
+    border-radius: .1rem;
+}
+
+
+/**推荐歌单************************************/
+.mmen .mmen-title {
+    font-size: .28rem;
+    padding: .3rem .16rem;
+}
+
+.mmen .mmen-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 .08rem;
+}
+
+.mmen .mmen-list-view {
+    width: 33.333333333%;
+    box-sizing: border-box;
+    padding: 0 .08rem;
+    position: relative;
+    margin-bottom: .2rem;
+}
+
+.mmen .mmen-list-view img {
+    width: 100%;
+    display: block;
+}
+
+.mmen .mmen-list-name {
+    font-size: .22rem;
+    color: #333;
+    padding: .12rem 0;
+
+}
+
+.mmen .mmen-list-name p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.mmen .mmen-icon {
+    position: absolute;
+    top: 3px;
+    right: .16rem;
+    font-size: 10px;
+    color: #fff;
+}
+
+.mmen .mmen-icon .iconfont {
+    font-size: 10px;
+    color: #fff;
+}
+
+
+
+</style>
+
+
