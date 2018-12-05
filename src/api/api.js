@@ -32,6 +32,7 @@ export const all = Arr => {
     return Promise.all(Arr)
 }
 
+
 //响应拦截器
 axios.interceptors.response.use(
     res => {
