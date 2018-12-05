@@ -1,6 +1,6 @@
 <template>
-  <div id="app" @mousemove.stop="move">
-    <mheader></mheader>
+  <div id="app">
+    <mheader @search="search"></mheader>
     <navtab></navtab>
     <keep-alive>
       <router-view/>
@@ -14,9 +14,10 @@ import navtab from '@/components/nav/navtab'
 export default {
   name: "App",
   methods: {
-        move() {
-            return false
-        }
+     search() {
+       console.log(1)
+        this.$router.push({ path: '/Home/search' })
+     }
   },
   components: {
     mheader,

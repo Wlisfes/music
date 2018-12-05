@@ -7,8 +7,19 @@ export default new Router({
     routes: [
         {
             path: '/',
+            redirect: '/Home'
+        },
+        {
+            path: '/Home',
             name: 'Home',
-            component: () => import('@/components/home/Home')
+            component: () => import('@/components/home/Home'),
+            children: [
+                {
+                    path: '/search',
+                    name: 'Home',
+                    component: () => import('@/components/base/search'),
+                }
+            ]
         },
         {
             path: '/Rank',
@@ -19,6 +30,6 @@ export default new Router({
             path: '/Singer',
             name: 'Singer',
             component: () => import('@/components/home/Singer')
-        },
+        }
     ]
 })

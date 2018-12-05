@@ -2,7 +2,7 @@
     <div class="m-header" @touchmove.prevent="move">
         <div class="meun"><i class="iconfont icon-menu"></i></div>
         <h1 class="m-title">MUSIC</h1>
-        <div class="search"><i class="iconfont icon-sousuo"></i></div>
+        <div class="search" @click="search"><i class="iconfont icon-sousuo"></i></div>
     </div>
 </template>
 
@@ -11,6 +11,9 @@ export default {
     methods: {
         move() {
             return false
+        },
+        search() {
+            this.$emit('search')
         }
     }
 }
