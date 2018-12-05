@@ -17,14 +17,14 @@
                 <div class="mmen">
                     <div class="mmen-title"><h3>推荐歌单</h3></div>
                     <div class="mmen-list">
-                        <div class="mmen-list-view" v-for="(lz,i) in lizedList" :key="i">
-                            <img v-lazy="lz.picUrl" :alt="lz.name">
+                        <div @click="selectItem(Item)" class="mmen-list-view" v-for="(Item,i) in lizedList" :key="i">
+                            <img v-lazy="Item.picUrl" :alt="Item.name">
                             <div class="mmen-list-name">
-                                <p v-html="lz.name"></p>
+                                <p v-html="Item.name"></p>
                             </div>
                             <p class="mmen-icon">
                                 <i class="iconfont icon-erji"></i>
-                                {{lz.playCount | nau}}
+                                {{Item.playCount | nau}}
                             </p>
                         </div>
                     </div>
@@ -32,6 +32,7 @@
                 
             </div>
         </bscroll>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -61,15 +62,18 @@ export default {
     methods: {
         async _getbanner() {
             let res = await this.api.getbanner()
-
-            console.log(res)
+            
             this.bannerList = res.banners
         },
         async _getlized() {
             let res = await this.api.getlized()
 
-            console.log(res)
             this.lizedList = res.result
+        },
+        selectItem(item) {
+            console.log(item)
+
+            this.$router.push({ path: `/Home/${item.id}` })
         }
     },
     filters: {

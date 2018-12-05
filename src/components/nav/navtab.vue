@@ -1,7 +1,7 @@
 <template>
     <div class="nav" @touchmove.prevent="move">
         <div class="navtab">
-            <router-link to="/">
+            <router-link to="/Home">
                 <div class="tab">
                     <span>推荐</span>
                 </div>
@@ -65,6 +65,10 @@ export default {
 .navtab .tab span {
     border-bottom: 2px solid #e24d37;
     padding: 0 10px;
+}
+
+.navtab .router-link-active span  {
+    border-bottom: 2px solid #e24d37;
 }
 
 .navtab .router-link-exact-active span {

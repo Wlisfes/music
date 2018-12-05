@@ -15,9 +15,9 @@ export default new Router({
             component: () => import('@/components/home/Home'),
             children: [
                 {
-                    path: '/search',
-                    name: 'Home',
-                    component: () => import('@/components/base/search'),
+                    path: ':id',
+                    name: 'Songer',
+                    component: () => import('@/components/chald/Songer')
                 }
             ]
         },
@@ -30,6 +30,11 @@ export default new Router({
             path: '/Singer',
             name: 'Singer',
             component: () => import('@/components/home/Singer')
+        },
+        {
+            path: '/search',
+            name: 'search',
+            component: () => import('@/components/base/search'),
         }
     ]
 })

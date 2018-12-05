@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <mheader @search="search"></mheader>
+    <mheader></mheader>
     <navtab></navtab>
     <keep-alive>
       <router-view/>
@@ -14,10 +14,7 @@ import navtab from '@/components/nav/navtab'
 export default {
   name: "App",
   methods: {
-     search() {
-       console.log(1)
-        this.$router.push({ path: '/Home/search' })
-     }
+     
   },
   components: {
     mheader,

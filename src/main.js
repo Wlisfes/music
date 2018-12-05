@@ -7,8 +7,10 @@ import * as api from './api/api'
 import VueLazyLoad from 'vue-lazyload'
 import VueAwesomeSwiper  from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
+import fastclick from 'fastclick'
 
 
+fastclick.attach(document.body)
 
 Vue.config.productionTip = false
 Vue.prototype.api = api

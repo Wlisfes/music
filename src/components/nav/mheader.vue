@@ -2,7 +2,11 @@
     <div class="m-header" @touchmove.prevent="move">
         <div class="meun"><i class="iconfont icon-menu"></i></div>
         <h1 class="m-title">MUSIC</h1>
-        <div class="search" @click="search"><i class="iconfont icon-sousuo"></i></div>
+        <router-link to="/search" class="search" tag="div">
+            <div class="linkci">
+                <i class="iconfont icon-sousuo"></i>
+            </div>
+        </router-link>
     </div>
 </template>
 
@@ -11,9 +15,6 @@ export default {
     methods: {
         move() {
             return false
-        },
-        search() {
-            this.$emit('search')
         }
     }
 }
@@ -55,11 +56,16 @@ export default {
 .m-header .search {
     width: 44px;
     height: 44px;
+    position: absolute;
+    right: 0;top: 0;
+}
+
+.m-header .search .linkci {
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    right: 0;top: 0;
 }
 
 </style>
