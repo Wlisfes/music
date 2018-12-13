@@ -7,19 +7,35 @@
                 </div>
                 <div class="backTitle" v-html="header"></div>
             </header>
-            564564
+            <bscroll 
+                class="SgerBscll" 
+                :listenScroll="listenScroll" 
+                @scroll="scroll">
+                <div class="BscllCont">
+
+                    <ul>
+                        <li v-for="l in 100" :key="l" v-html="l"></li>
+                    </ul>
+
+                </div>
+            </bscroll>
         </div>
     </transition>
 </template>
 
 
 <script>
-import axios from 'axios'
+import bscroll from '../base/bscorll'
+
 export default {
     data() {
         return {
             header: '返回',
-            id: ''
+            id: '',
+
+            
+            listenScroll: true
+            
         }
     },
     methods: {
@@ -45,12 +61,19 @@ export default {
             })
 
             console.log(res)
+        },
+        //bscroll组件派发出来的滚动事件
+        scroll(e) {
+            console.log(e)
         }
 
     },
     created() {
         this.getrouterData()
         this._getplaylistdet()
+    },
+    components: {
+        bscroll
     }
 }
 </script>
@@ -99,6 +122,18 @@ export default {
             display flex
             align-items center
         }
+    }
+
+
+}
+
+
+
+.SgerBscll {
+    height calc(100% - 44px)
+
+    .BscllCont {
+        padding-top 4.2rem
     }
 }
 
