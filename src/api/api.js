@@ -8,15 +8,19 @@ import { http } from './apiConfig'
 
 export const xhr = (param, url, type = 'GET') => {
     return new Promise((resolve, reject) => {
-        axios({
-            method: type,
-            url: url,
-            data: param
-        }).then(res => {
-            resolve(res.data)
-        }).catch(e => {
-            reject(e)
-        })
+        if (type = 'GET')
+            axios.get(url, param).then(res => {
+                resolve(res.data)
+            }).catch(e => {
+                reject(e)
+            })
+        else
+            axios.post(url, param.params).then(res => {
+                resolve(res.data)
+            }).catch(e => {
+                reject(e)
+            })
+
     })
 }
 

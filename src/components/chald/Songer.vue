@@ -14,6 +14,7 @@
 
 
 <script>
+import axios from 'axios'
 export default {
     data() {
         return {
@@ -38,7 +39,9 @@ export default {
         },
         async _getplaylistdet() {
             let res = await this.api.getplaylistdet({
-                id: this.id
+                params: {
+                    id: this.id
+                }
             })
 
             console.log(res)
