@@ -23,6 +23,11 @@ Vue.use(VueLazyLoad, {
   loading: require('../static/image/load.png')
 })
 
+//全局返回
+Vue.prototype.back = () => {
+  router.go(-1)
+}
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

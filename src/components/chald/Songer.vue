@@ -2,11 +2,12 @@
     <transition name="Songer">
         <div class="Sger">
             <header class="SgerHeader">
-                <div class="back" @click="Toast">
+                <div class="back" @click="back">
                     <i class="iconfont icon-fanhui"></i>
                 </div>
                 <div class="backTitle" v-html="header"></div>
             </header>
+            564564
         </div>
     </transition>
 </template>
