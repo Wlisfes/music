@@ -4,6 +4,8 @@ import axios from 'axios'
 import logo from './logo'
 import { http } from './apiConfig'
 
+// axios.defaults.baseURL='/api'
+
 export const xhr = (param, url, type = 'GET') => {
     return new Promise((resolve, reject) => {
         axios({
