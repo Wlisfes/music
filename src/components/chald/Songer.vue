@@ -17,12 +17,14 @@
 export default {
     data() {
         return {
-            header: '返回'
+            header: '返回',
+            id: ''
         }
     },
     methods: {
         //
         getrouterData() {
+            this.id = this.$route.params.id
             console.log(this.$route.params)
         },
         Toast() {
@@ -33,11 +35,19 @@ export default {
                 icon: 'icon-success',
                 duration: 3000
             })
+        },
+        async _getplaylistdet() {
+            let res = await this.api.getplaylistdet({
+                id: this.id
+            })
+
+            console.log(res)
         }
 
     },
     created() {
         this.getrouterData()
+        this._getplaylistdet()
     }
 }
 </script>

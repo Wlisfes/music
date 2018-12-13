@@ -55,7 +55,12 @@ export const getbanner = param => {
     return xhr(param, `${http}/banner`)
 }
 
-
+//推荐歌单
 export const getlized = param => {
     return xhr(param, `${http}/personalized`)
+}
+
+//歌单详情
+export const getplaylistdet = param => {
+    return xhr(param, `${http}/playlist/detail`)
 }
