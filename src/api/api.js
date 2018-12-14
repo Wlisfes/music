@@ -2,9 +2,8 @@
 
 import axios from 'axios'
 import logo from './logo'
-import { http } from './apiConfig'
 
-// axios.defaults.baseURL='/api'
+axios.defaults.baseURL='/api'
 
 export const xhr = (param, url, type = 'GET') => {
     return new Promise((resolve, reject) => {
@@ -58,15 +57,16 @@ axios.interceptors.response.use(
 
 //轮播图
 export const getbanner = param => {
-    return xhr(param, `${http}/banner`)
+    return xhr(param, `/banner`)
 }
 
 //推荐歌单
 export const getlized = param => {
-    return xhr(param, `${http}/personalized`)
+    return xhr(param, `/personalized`)
 }
 
 //歌单详情
 export const getplaylistdet = param => {
-    return xhr(param, `${http}/playlist/detail`)
+    return xhr(param, `/playlist/detail`)
 }
+

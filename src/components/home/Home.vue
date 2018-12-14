@@ -38,6 +38,7 @@
 
 <script>
 import bscroll from '../base/bscorll'
+import axios from 'axios'
 
 export default {
     data() {
@@ -71,9 +72,8 @@ export default {
             this.lizedList = res.result
         },
         selectItem(item) {
-            console.log(item)
 
-            this.$router.push({ path: `/Home/${item.id}` })
+            this.$router.push({ path: `/Home/${item.id}`, query: { url: item.picUrl  } })
         }
     },
     filters: {
@@ -89,6 +89,8 @@ export default {
     created() {
         this._getbanner()
         this._getlized()
+
+        
     },
     mounted() {
         
@@ -135,7 +137,7 @@ export default {
 
 /**推荐歌单************************************/
 .mmen .mmen-title {
-    font-size: .28rem;
+    font-size: 18px;
     padding: .3rem .16rem;
 }
 
@@ -156,10 +158,11 @@ export default {
 .mmen .mmen-list-view img {
     width: 100%;
     display: block;
+    border-radius: 5px;
 }
 
 .mmen .mmen-list-name {
-    font-size: .22rem;
+    font-size: 12px;
     color: #333;
     padding: .12rem 0;
 

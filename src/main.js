@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import * as api from './api/api'
+import * as status from './api/apiConfig'
 import VueLazyLoad from 'vue-lazyload'
 import VueAwesomeSwiper  from 'vue-awesome-swiper'
 import wu from '../static/baplu/wu-ui/wu-ui'
@@ -16,6 +17,7 @@ fastclick.attach(document.body)
 
 Vue.config.productionTip = false
 Vue.prototype.api = api
+Vue.prototype.code = status
 Vue.prototype.wu = wu
 Vue.use(VueAwesomeSwiper)
 Vue.use(VueLazyLoad, {
