@@ -70,3 +70,14 @@ export const getplaylistdet = param => {
     return xhr(param, `/playlist/detail`)
 }
 
+//获取歌手
+export const getSingerlist = param => {
+    return xhr(param, `/top/artists`)
+}
+
+
+
+
+
+
+

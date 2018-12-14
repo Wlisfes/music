@@ -115,6 +115,9 @@ export default {
         },
         //滚动加载
         scrollToEnd() {
+            if(this.trackslist.length == 0) {
+                return
+            }
             let pullupCode = this.bscll.pullupCode
             let tracks = this.playlist.tracks
             let trackslist = this.trackslist
