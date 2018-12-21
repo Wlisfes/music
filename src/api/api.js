@@ -3,7 +3,7 @@
 import axios from 'axios'
 import logo from './logo'
 
-axios.defaults.baseURL='/api'
+axios.defaults.baseURL='http://lisfes.cn'
 
 export const xhr = (param, url, type = 'GET') => {
     return new Promise((resolve, reject) => {
