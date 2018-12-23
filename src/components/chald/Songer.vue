@@ -1,7 +1,7 @@
 <template>
     <transition name="Songer">
         <div class="Sger">
-            <div class="bgurl" :style="{ 'background-image': 'url('+ bgurl +')','pointer-events': 'auto'}"></div>
+            <div class="bgurl" :style="{ 'background-image': 'url('+ SONGER_BACK_IMAGE +')','pointer-events': 'auto'}"></div>
             <header class="SgerHeader">
                 <div class="back" @click="back">
                     <i class="iconfont icon-fanhui"></i>
@@ -58,6 +58,7 @@
 
 <script>
 import bscroll from '../base/bscorll'
+import { mapGetters  } from 'vuex'
 
 export default {
     data() {
@@ -71,8 +72,6 @@ export default {
             header: '返回',
             //歌单id
             id: '',
-            //歌单背景图
-            bgurl: '',
             //歌单数据
             playlist: {},
             //共多少歌曲
@@ -86,7 +85,6 @@ export default {
         //获取歌单id和背景图
         getrouterData() {
             this.id = this.$route.params.id
-            // this.bgurl = this.$route.query.url
         },
         Toast() {
             console.log(1)
@@ -158,12 +156,15 @@ export default {
         }
 
     },
+    computed: {
+        ...mapGetters([
+            'SONGER_BACK_IMAGE'
+        ])
+    },
     created() {
         this.getrouterData()
         this._getplaylistdet()
-    },
-    mounted() {
-        
+        // console.log(this.SONGER_BACK_IMAGE)
     },
     components: {
         bscroll

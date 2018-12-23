@@ -38,7 +38,7 @@
 
 <script>
 import bscroll from '../base/bscorll'
-import axios from 'axios'
+import { mapMutations } from 'vuex'
 
 export default {
     data() {
@@ -61,6 +61,9 @@ export default {
         }
     },
     methods: {
+        ...mapMutations([
+            'set_SONGER_BACK_IMAGE'
+        ]),
         async _getbanner() {
             let res = await this.api.getbanner()
             
@@ -74,6 +77,9 @@ export default {
         selectItem(item) {
 
             this.$router.push({ path: `/Home/${item.id}` })
+            this.set_SONGER_BACK_IMAGE(item.picUrl)
+            // this.store.commit('set_SONGER_BACK_IMAGE', item.picUrl)
+            // console.log(item)
         }
     },
     filters: {
