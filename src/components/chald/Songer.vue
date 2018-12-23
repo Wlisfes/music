@@ -11,7 +11,9 @@
             <bscroll 
                 class="SgerBscll" 
                 :pullup="bscll.pullup" 
+                :listenScroll="bscll.listenScroll" 
                 @scrollToEnd="scrollToEnd" 
+                @scroll="_scroll" 
                 :data="trackslist">
                 <div class="BscllCont">
                     <div class="playList">
@@ -63,6 +65,7 @@ export default {
             bscll: {
                 pullup: true,          //派发滚动到底事件
                 pullupCode: true,      //滚动加载是否完成
+                listenScroll: true,    //派发滚动事件
             },
             //标题文字
             header: '返回',
@@ -83,7 +86,7 @@ export default {
         //获取歌单id和背景图
         getrouterData() {
             this.id = this.$route.params.id
-            this.bgurl = this.$route.query.url
+            // this.bgurl = this.$route.query.url
         },
         Toast() {
             console.log(1)
@@ -142,12 +145,25 @@ export default {
 
                 this.pullupCode = true
             }
+        },
+        //bscrell组件滚动事件
+        _scroll(e) {
+            // console.log(e)
+            // this.wu.showToast({
+            //     title: '操作成功',
+            //     mask: false,
+            //     icon: 'icon-success',
+            //     duration: 1000
+            // })
         }
 
     },
     created() {
         this.getrouterData()
         this._getplaylistdet()
+    },
+    mounted() {
+        
     },
     components: {
         bscroll
@@ -162,7 +178,8 @@ export default {
 }
 
 .Songer-enter,.Songer-leave-to {
-    transform translate3d(100%, 0, 0)
+    transform translate3d(100%, 0, 0);
+    opacity 0
 }
 
 .Sger {

@@ -73,7 +73,7 @@ export default {
         },
         selectItem(item) {
 
-            this.$router.push({ path: `/Home/${item.id}`, query: { url: item.picUrl  } })
+            this.$router.push({ path: `/Home/${item.id}` })
         }
     },
     filters: {

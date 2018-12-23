@@ -30,6 +30,10 @@ Vue.prototype.back = () => {
   router.go(-1)
 }
 
+
+
+
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
