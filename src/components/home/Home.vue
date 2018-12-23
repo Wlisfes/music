@@ -75,11 +75,9 @@ export default {
             this.lizedList = res.result
         },
         selectItem(item) {
-
             this.$router.push({ path: `/Home/${item.id}` })
             this.set_SONGER_BACK_IMAGE(item.picUrl)
-            // this.store.commit('set_SONGER_BACK_IMAGE', item.picUrl)
-            // console.log(item)
+
         }
     },
     filters: {

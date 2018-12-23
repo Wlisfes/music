@@ -11,16 +11,18 @@ import VueAwesomeSwiper  from 'vue-awesome-swiper'
 import wu from '../static/baplu/wu-ui/wu-ui'
 import '../static/baplu/wu-ui/wu-ui.css'
 import 'swiper/dist/css/swiper.css'
-import fastclick from 'fastclick'
+// import fastclick from 'fastclick'
+import VueTouch  from 'v-touch'
 
 
-fastclick.attach(document.body)
+// fastclick.attach(document.body)
 
 Vue.config.productionTip = false
 Vue.prototype.api = api
 Vue.prototype.code = status
 Vue.prototype.wu = wu
 Vue.use(VueAwesomeSwiper)
+Vue.use(VueTouch)
 Vue.use(VueLazyLoad, {
   error: require('../static/image/load.png'),
   loading: require('../static/image/load.png')
