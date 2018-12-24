@@ -1,10 +1,12 @@
 'use strict'
 
 export default {
-    set_SONGER_BACK_IMAGE(state, url) {
-        state.SONGER_BACK_IMAGE = url
+    set_songer_back_image(state, url) {
+        state.songer_back_image = url
+    },
+    set_fullScreen(state, flag) {
+        state.fullScreen = flag
     }
-
 
 
 

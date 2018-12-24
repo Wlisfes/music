@@ -1,7 +1,7 @@
 <template>
     <transition name="Songer">
         <div class="Sger">
-            <div class="bgurl" :style="{ 'background-image': 'url('+ SONGER_BACK_IMAGE +')','pointer-events': 'auto'}"></div>
+            <div class="bgurl" :style="{ 'background-image': 'url('+ songer_back_image +')','pointer-events': 'auto'}"></div>
             <header class="SgerHeader">
                 <div class="back" @click="back">
                     <i class="iconfont icon-fanhui"></i>
@@ -32,7 +32,7 @@
                                 </div>
                             </div>
                             <ul style="padding-bottom: 20px;">
-                                <li class="playli" v-for="(ks, i) in trackslist" :key="i" v-if="i <= 998">
+                                <li class="playli" @click="openMalplayer" v-for="(ks, i) in trackslist" :key="i" v-if="i <= 998">
                                     <div class="playli-In">{{i+1}}</div>
                                     <div class="playli-Ct">
                                         <h2>{{ks.name}}</h2>
@@ -58,7 +58,7 @@
 
 <script>
 import bscroll from '../base/bscorll'
-import { mapGetters  } from 'vuex'
+import { mapGetters,mapMutations } from 'vuex'
 
 export default {
     data() {
@@ -82,6 +82,9 @@ export default {
         }
     },
     methods: {
+        ...mapMutations([
+            'set_fullScreen'
+        ]),
         //获取歌单id和背景图
         getrouterData() {
             this.id = this.$route.params.id
@@ -113,6 +116,10 @@ export default {
 
                 // this.wu.hideToast()
             }
+        },
+        //点击歌曲播放
+        openMalplayer() {
+            this.set_fullScreen(true)
         },
         //滚动加载
         scrollToEnd() {
@@ -158,7 +165,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'SONGER_BACK_IMAGE'
+            'songer_back_image'
         ])
     },
     created() {

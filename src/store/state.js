@@ -2,7 +2,10 @@
 
 const state = {
     //歌单背景图片
-    SONGER_BACK_IMAGE: ''
+    songer_back_image: '',
+    
+    //播放器状态
+    fullScreen: false
 }
 
 

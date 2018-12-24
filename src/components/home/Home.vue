@@ -62,7 +62,7 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'set_SONGER_BACK_IMAGE'
+            'set_songer_back_image'
         ]),
         async _getbanner() {
             let res = await this.api.getbanner()
@@ -76,7 +76,7 @@ export default {
         },
         selectItem(item) {
             this.$router.push({ path: `/Home/${item.id}` })
-            this.set_SONGER_BACK_IMAGE(item.picUrl)
+            this.set_songer_back_image(item.picUrl)
 
         }
     },

@@ -5,12 +5,14 @@
     <keep-alive>
       <router-view/>
     </keep-alive>
+    <player></player>
   </div>
 </template>
 
 <script>
 import mheader from '@/components/nav/mheader'
 import navtab from '@/components/nav/navtab'
+import player from '@/components/player/player'
 export default {
   name: "App",
   methods: {
@@ -18,7 +20,8 @@ export default {
   },
   components: {
     mheader,
-    navtab
+    navtab,
+    player
   }
 }
 </script>
