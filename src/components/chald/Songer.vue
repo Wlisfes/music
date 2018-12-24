@@ -135,7 +135,6 @@ export default {
             this.set_fullScreen(true)
             this.set_playlist(this.playlist.tracks)
 
-            
         },
         //滚动加载
         scrollToEnd() {
@@ -169,7 +168,7 @@ export default {
         },
         //bscrell组件滚动事件
         _scroll(e) {
-            // console.log(e)
+            console.log(e)
             // this.wu.showToast({
             //     title: '操作成功',
             //     mask: false,

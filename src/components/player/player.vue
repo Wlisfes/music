@@ -5,14 +5,14 @@
         <transition name="normal">
             <div class="mal-player" v-show="fullScreen">
                 <div class="background">
-                    <img :src="songer_back_image" border="0" >
+                    <img :src="musicImage ? musicImage : songer_back_image" border="0" >
                 </div>
                 <header class="mal-header">
                     <div class="back" @click="backMiniplayer">
                         <i class="iconfont icon-fanhui"></i>
                     </div>
-                    <div class="header-title">刀剑神域</div>
-                    <p>刀剑神域</p>
+                    <div class="header-title" v-html="musicName"></div>
+                    <p v-html="singerName"></p>
                 </header>
 
                 <!-- 唱盘 start -->
@@ -20,18 +20,29 @@
                     <div class="middle-l">
                         <div class="cd-wrapper">
                             <div class="cd play">
-                                <img :src="songer_back_image" class="image">
+                                <img :src="musicImage ? musicImage : songer_back_image" class="image">
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
                 <!-- 唱盘 end -->
 
 
+                <!-- 底部操作区域 start -->
+                <div class="play-opera">
+                    <div class="play-progress"></div>
 
+                    <div class="play-operators">
+                        <div class="play-flex">
+                            
+                        </div>
+                        <div class="play-flex"></div>
+                        <div class="play-flex"></div>
+                        <div class="play-flex"></div>
+                        <div class="play-flex"></div>
+                    </div>
+                </div>
+                <!-- 底部操作区域 end -->
             </div>
         </transition>
         <!-- 全屏播放器 end -->
@@ -48,7 +59,7 @@
         <!-- 迷你播放器 end -->
 
 
-        <audio src=""></audio>
+        <audio :src="musicUrl" autoplay ref="audioRef"></audio>
     </div>
 </template>
 
@@ -57,7 +68,14 @@ import { mapGetters,mapMutations } from 'vuex'
 export default {
     data() {
         return {
-            
+            //歌手图片
+            musicImage: '',
+            //歌曲名称
+            musicName: '',
+            //歌手姓名
+            singerName: '',
+            //歌曲url
+            musicUrl: ''
         }
     },
     computed: {
@@ -81,13 +99,36 @@ export default {
             this.set_fullScreen(true)
         },
         async _getsongurl() {
-            let id = th
-            let res = await this.api.getsongurl()
+            let item = this.playlist[this.playIndex]
+
+            this.musicImage = item.al.picUrl
+            this.musicName = item.al.name
+            this.singerName = item.ar[0].name
+
+            let res = await this.api.getsongurl({
+                params: {
+                    id: item.id
+                }
+            })
+
+            if (res.code === 200) {
+                this.musicUrl = res.data[0].url
+
+                this.$nextTick(() => {
+                    this.$refs.audioRef.play()
+                    this.wu.showToast({
+                        title: res.data[0].url,
+                        mask: false,
+                        icon: 'icon-success',
+                        duration: 1000
+                    })
+                })
+            }
         }
     },
     watch: {
         playIndex(){
-            console.log(this.playIndex)
+            this._getsongurl()
         }   
     }
 }
@@ -218,7 +259,7 @@ export default {
         &.normal-enter-active, &.normal-leave-active {
             transition: all 0.4s;
 
-            .mal-header {
+            .mal-header,.play-opera {
                 transition: all 0.4s cubic-bezier(0.86, 0.18, 0.82, 1.32);
             }
         }
@@ -228,6 +269,36 @@ export default {
 
             .mal-header {
                 transform: translate3d(0, -100px, 0);
+            }
+
+            .play-opera {
+                transform: translate3d(0, 100px, 0);
+            }
+        }
+
+
+        .play-opera {
+            position absolute;
+            bottom 50px;
+            height 90px;
+            width 100%;
+
+            .play-progress {
+                display flex;
+                align-items center;
+                width 80%;
+                margin 0 auto;
+                height 50px;
+            }
+
+            .play-operators {
+                display flex;
+                align-items center;
+                height 40px;
+
+                .play-flex {
+                    flex 1;
+                }
             }
         }
     }
