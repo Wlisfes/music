@@ -1,5 +1,7 @@
 <template>
-    <div class="normal">
+    <div class="normal" v-show="playlist.length > 0">
+        
+        <!-- 全屏播放器 start -->
         <transition name="normal">
             <div class="mal-player" v-show="fullScreen">
                 <div class="background">
@@ -32,6 +34,21 @@
 
             </div>
         </transition>
+        <!-- 全屏播放器 end -->
+
+
+        <!-- 迷你播放器 start -->
+        <transition name="mini">
+            <div class="mini" v-show="!fullScreen" @click="openMiniplayer" @touchmove.prevent="move">
+                <div class="mini-player">
+
+                </div>
+            </div>
+        </transition>
+        <!-- 迷你播放器 end -->
+
+
+        <audio src=""></audio>
     </div>
 </template>
 
@@ -40,7 +57,8 @@ import { mapGetters,mapMutations } from 'vuex'
 export default {
     computed: {
         ...mapGetters([
-            'fullScreen'
+            'fullScreen',
+            'playlist'
         ])   
     },
     methods: {
@@ -50,6 +68,10 @@ export default {
         //关闭全屏播放器
         backMiniplayer() {
             this.set_fullScreen(false)
+        },
+        //打开全屏播放器
+        openMiniplayer() {
+            this.set_fullScreen(true)
         }
     }
 }
@@ -176,24 +198,55 @@ export default {
                 }
             }
         }
-    }
 
-    .normal-enter-active, .normal-leave-active {
-        transition: all 0.4s;
+        &.normal-enter-active, &.normal-leave-active {
+            transition: all 0.4s;
 
-        .mal-header {
-            transition: all 0.4s cubic-bezier(0.86, 0.18, 0.82, 1.32);
+            .mal-header {
+                transition: all 0.4s cubic-bezier(0.86, 0.18, 0.82, 1.32);
+            }
         }
-    }
 
-    .normal-enter, .normal-leave-to {
-        opacity: 0;
+        &.normal-enter, &.normal-leave-to {
+            opacity: 0;
 
-        .mal-header {
-            transform: translate3d(0, -100px, 0);
+            .mal-header {
+                transform: translate3d(0, -100px, 0);
+            }
         }
     }
 }
+    
+
+/***迷你播放器**********************************************/
+.mini {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 180;
+    width: 100%;
+    height: 60px;
+    background #fff;
+
+    .mini-player {
+        display: flex;
+        align-items: center;
+        position relative
+    }
+    
+    &.mini-enter-active, &.mini-leave-active {
+        transition: all 0.4s;
+    }
+
+    &.mini-enter, &.mini-leave-to {
+        opacity: 0;
+        transform: translate3d(0, 100px, 0);
+    }
+}
+    
+
+    
+
 
 
 

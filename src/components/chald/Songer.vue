@@ -17,7 +17,7 @@
                 :data="trackslist">
                 <div class="BscllCont">
                     <div class="playList">
-                        <section  class="tracks" v-if="trackslist">
+                        <section  class="tracks" v-if="trackslist.length > 0">
                             <div class="tracksTi">
                                 <div class="playAll">
                                     <i class="iconfont icon-tag3"></i>
@@ -28,11 +28,11 @@
                                 </div>
                                 <div class="playColl">
                                     <i class="iconfont icon-shoucang"></i>
-                                    <span>收藏 ({{playlist.subscribedCount > 100000 ? '99999+' : playlist.subscribedCount}})</span>
+                                    <span>收藏 ({{playlist.subscribedCount | star}})</span>
                                 </div>
                             </div>
-                            <ul style="padding-bottom: 20px;">
-                                <li class="playli" @click="openMalplayer" v-for="(ks, i) in trackslist" :key="i" v-if="i <= 998">
+                            <ul :class="{ active: BscllContpadding }">
+                                <li class="playli" @click="openMalplayer(ks, i)" v-for="(ks, i) in trackslist" :key="i" v-if="i <= 998">
                                     <div class="playli-In">{{i+1}}</div>
                                     <div class="playli-Ct">
                                         <h2>{{ks.name}}</h2>
@@ -77,13 +77,21 @@ export default {
             //共多少歌曲
             playAll: 0,
             //歌单中的部分歌曲
-            trackslist: []
-            
+            trackslist: [],
+            //是否添加
+            BscllContpadding: false
         }
+    },
+    computed: {
+        ...mapGetters([
+            'songer_back_image',
+            'fullScreen'
+        ])
     },
     methods: {
         ...mapMutations([
-            'set_fullScreen'
+            'set_fullScreen',
+            'set_playlist'
         ]),
         //获取歌单id和背景图
         getrouterData() {
@@ -107,7 +115,7 @@ export default {
                 }
             })
 
-            if (res.code == this.code.ERROK) {
+            if (res.code == 200) {
                 let tracks = res.playlist.tracks
 
                 this.playAll = tracks.length
@@ -118,8 +126,21 @@ export default {
             }
         },
         //点击歌曲播放
-        openMalplayer() {
+        openMalplayer(item, i) {
+
+            console.log(item)
+
+
+
+
+
+
+
+
             this.set_fullScreen(true)
+            this.set_playlist(this.playlist.tracks)
+
+            
         },
         //滚动加载
         scrollToEnd() {
@@ -163,10 +184,23 @@ export default {
         }
 
     },
-    computed: {
-        ...mapGetters([
-            'songer_back_image'
-        ])
+    filters: {
+        star(val) {
+            if (val < 10000) return '1万'
+            if (val > 99999999) return '9999万+'
+            var i = (val / 10000).toFixed(1)
+
+            return i + '万'
+        }
+    },
+    watch: {
+        fullScreen() {
+            if (this.fullScreen) {
+                this.BscllContpadding = false
+            } else {
+                this.BscllContpadding = true
+            }
+        }
     },
     created() {
         this.getrouterData()
@@ -263,6 +297,10 @@ export default {
             overflow hidden
 
             .tracks {
+                ul{
+                    padding-bottom: 20px;
+                }
+
                 .tracksTi {
                     height 50px
                     position relative
@@ -303,7 +341,7 @@ export default {
                     }
 
                     .playColl {
-                        width 120px
+                        width 130px
                         display flex
                         align-items center
                         justify-content center
@@ -379,6 +417,9 @@ export default {
                             color #999
                         }
                     }
+                }
+                >.active {
+                    padding-bottom 80px;
                 }
             }
         }

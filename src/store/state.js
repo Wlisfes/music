@@ -5,7 +5,10 @@ const state = {
     songer_back_image: '',
     
     //播放器状态
-    fullScreen: false
+    fullScreen: false,
+
+    //播放歌曲列表
+    playlist: []
 }
 
 

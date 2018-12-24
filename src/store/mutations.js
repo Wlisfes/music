@@ -6,8 +6,10 @@ export default {
     },
     set_fullScreen(state, flag) {
         state.fullScreen = flag
+    },
+    set_playlist(state, list) {
+        state.playlist = list
     }
-
 
 
 
