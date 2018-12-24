@@ -8,7 +8,10 @@ const state = {
     fullScreen: false,
 
     //播放歌曲列表
-    playlist: []
+    playlist: [],
+
+    //播放歌曲下标
+    playIndex: -1
 }
 
 

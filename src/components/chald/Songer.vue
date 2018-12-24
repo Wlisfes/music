@@ -91,7 +91,8 @@ export default {
     methods: {
         ...mapMutations([
             'set_fullScreen',
-            'set_playlist'
+            'set_playlist',
+            'set_playIndex'
         ]),
         //获取歌单id和背景图
         getrouterData() {
@@ -130,13 +131,7 @@ export default {
 
             console.log(item)
 
-
-
-
-
-
-
-
+            this.set_playIndex(i)
             this.set_fullScreen(true)
             this.set_playlist(this.playlist.tracks)
 

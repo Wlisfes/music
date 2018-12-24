@@ -9,8 +9,10 @@ export default {
     },
     set_playlist(state, list) {
         state.playlist = list
+    },
+    set_playIndex(state, index) {
+        state.playIndex = index
     }
-
 
 
 

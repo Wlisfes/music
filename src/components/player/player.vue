@@ -5,7 +5,7 @@
         <transition name="normal">
             <div class="mal-player" v-show="fullScreen">
                 <div class="background">
-                    <img src="" border="0" >
+                    <img :src="songer_back_image" border="0" >
                 </div>
                 <header class="mal-header">
                     <div class="back" @click="backMiniplayer">
@@ -20,7 +20,7 @@
                     <div class="middle-l">
                         <div class="cd-wrapper">
                             <div class="cd play">
-                                <img src="" class="image">
+                                <img :src="songer_back_image" class="image">
                             </div>
                         </div>
                     </div>
@@ -55,10 +55,17 @@
 <script>
 import { mapGetters,mapMutations } from 'vuex'
 export default {
+    data() {
+        return {
+            
+        }
+    },
     computed: {
         ...mapGetters([
             'fullScreen',
-            'playlist'
+            'playlist',
+            'playIndex',
+            'songer_back_image'
         ])   
     },
     methods: {
@@ -72,7 +79,16 @@ export default {
         //打开全屏播放器
         openMiniplayer() {
             this.set_fullScreen(true)
+        },
+        async _getsongurl() {
+            let id = th
+            let res = await this.api.getsongurl()
         }
+    },
+    watch: {
+        playIndex(){
+            console.log(this.playIndex)
+        }   
     }
 }
 </script>
