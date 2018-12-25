@@ -32,15 +32,7 @@
                 <div class="play-opera">
                     <div class="play-progress"></div>
 
-                    <div class="play-operators">
-                        <div class="play-flex">
-                            
-                        </div>
-                        <div class="play-flex"></div>
-                        <div class="play-flex"></div>
-                        <div class="play-flex"></div>
-                        <div class="play-flex"></div>
-                    </div>
+                    <play-operators></play-operators>
                 </div>
                 <!-- 底部操作区域 end -->
             </div>
@@ -59,12 +51,13 @@
         <!-- 迷你播放器 end -->
 
 
-        <audio :src="musicUrl" autoplay ref="audioRef"></audio>
+        <audio ref="audioRef" @ended="musicEnd"></audio>
     </div>
 </template>
 
 <script>
 import { mapGetters,mapMutations } from 'vuex'
+import playoperators from './play-operators'
 export default {
     data() {
         return {
@@ -85,6 +78,9 @@ export default {
             'playIndex',
             'songer_back_image'
         ])   
+    },
+    components: {
+        'play-operators': playoperators
     },
     methods: {
         ...mapMutations([
@@ -113,23 +109,39 @@ export default {
 
             if (res.code === 200) {
                 this.musicUrl = res.data[0].url
+                this.$refs.audioRef.src = res.data[0].url
 
-                this.$nextTick(() => {
-                    this.$refs.audioRef.play()
-                    this.wu.showToast({
-                        title: res.data[0].url,
-                        mask: false,
-                        icon: 'icon-success',
-                        duration: 1000
-                    })
-                })
+                // this.$nextTick(() => {
+                //     this.$refs.audioRef.play()
+
+                // })
             }
+        },
+        //歌曲url发生变化执行播放
+        chengeurl() {
+            if(!this.musicUrl){
+                return
+            }
+            console.log(1)
+            // this.$refs.audioRef.play()
+        },
+        //歌曲播放完毕事件
+        musicEnd() {
+
+            console.log('播放完毕')
         }
     },
     watch: {
         playIndex(){
             this._getsongurl()
-        }   
+        },
+        musicUrl(newVal, oldVal) {
+            this.chengeurl()
+        }
+    },
+    mounted() {
+        let m = document.querySelector('#app')
+            m.addEventListener('touchend', this.chengeurl)
     }
 }
 </script>
@@ -291,15 +303,7 @@ export default {
                 height 50px;
             }
 
-            .play-operators {
-                display flex;
-                align-items center;
-                height 40px;
-
-                .play-flex {
-                    flex 1;
-                }
-            }
+            
         }
     }
 }
