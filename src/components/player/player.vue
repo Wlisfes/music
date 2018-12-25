@@ -32,7 +32,12 @@
                 <div class="play-opera">
                     <div class="play-progress"></div>
 
-                    <play-operators></play-operators>
+                    <play-operators
+                     @playpo="pause"
+                     @prev="prev" 
+                     @next="next">
+
+                    </play-operators>
                 </div>
                 <!-- 底部操作区域 end -->
             </div>
@@ -76,6 +81,8 @@ export default {
             'fullScreen',
             'playlist',
             'playIndex',
+            'musicplay',
+            'musicmode',
             'songer_back_image'
         ])   
     },
@@ -84,7 +91,10 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'set_fullScreen'
+            'set_fullScreen',
+            'set_musicplay',
+            'set_musicmode',
+            'set_playIndex'
         ]),
         //关闭全屏播放器
         backMiniplayer() {
@@ -122,21 +132,78 @@ export default {
             if(!this.musicUrl){
                 return
             }
-            console.log(1)
-            // this.$refs.audioRef.play()
+
+            if (this.musicplay) {
+                return
+            }
+
+            this.$refs.audioRef.play()
+            this.set_musicplay(true)
+
+        },
+        //播放模式执行
+        _musicmode() {
+            let mode = this.musicmode
+            let index = this.playIndex
+            let listIn = this.playlist.length
+
+            switch (mode) {
+                case 0:
+                    if (index <= listIn - 1) {
+                        index ++
+                        this.set_playIndex(index)
+                    } else {
+                        this.set_playIndex(0)
+                    }
+                    break;
+            
+                default:
+                    break;
+            }
+            
         },
         //歌曲播放完毕事件
         musicEnd() {
+            this.set_musicplay(false)
 
+            this._musicmode()
             console.log('播放完毕')
+        },
+        //播放 or 暂停 
+        pause() {
+
+            if (this.musicplay) {
+            
+                this.set_musicplay(false)
+            } else {
+                
+                this.set_musicplay(true)
+            }
+            
+        },
+        //上一首
+        prev() {
+            
+        },
+        //下一首
+        next() {
+            this._musicmode()
         }
     },
     watch: {
-        playIndex(){
+        playIndex() {
+            this.pause()
             this._getsongurl()
         },
         musicUrl(newVal, oldVal) {
             this.chengeurl()
+        },
+        musicplay() {
+            if (this.musicplay) {
+                this.$refs.audioRef.play()
+            } else {
+                this.$refs.audioRef.pause()
+            }
         }
     },
     mounted() {

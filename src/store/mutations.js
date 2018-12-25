@@ -12,6 +12,12 @@ export default {
     },
     set_playIndex(state, index) {
         state.playIndex = index
+    },
+    set_musicplay(state, status) {
+        state.musicplay = status
+    },
+    set_musicmode(state, i) {
+        state.musicmode = i
     }
 
 

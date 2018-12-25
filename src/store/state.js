@@ -7,6 +7,12 @@ const state = {
     //播放器状态
     fullScreen: false,
 
+    //播放状态
+    musicplay: false,
+
+    //播放模式
+    musicmode: 0,
+
     //播放歌曲列表
     playlist: [],
 
