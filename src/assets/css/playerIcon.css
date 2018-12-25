@@ -22,48 +22,48 @@
   
     
   
-    .icon-dislike:before {
+    .play-operators .icon-dislike:before {
       content: "\E65C";
     }
-    .icon-caidan:before {
+    .play-operators .icon-caidan:before {
       content: "\E68B";
     }
-    .icon-caidan1:before {
+    .play-operators .icon-caidan1:before {
       content: "\E621";
     }
-    .icon-search:before {
+    .play-operators .icon-search:before {
       content: "\E633";
     }
-    .icon-danquxunhuan:before {
+    .play-operators .icon-danquxunhuan:before {
       content: "\E61E";
     }
-    .icon-list:before {
+    .play-operators .icon-list:before {
       content: "\E664";
     }
-    .icon-test:before {
+    .play-operators .icon-test:before {
       content: "\E601";
     }
-    .icon-suijibofang:before {
+    .play-operators .icon-suijibofang:before {
       content: "\E67D";
     }
-    .icon-loop:before {
+    .play-operators .icon-loop:before {
       content: "\E604";
     }
-    .icon-next:before {
+    .play-operators .icon-next:before {
       content: "\E605";
     }
-    .icon-random:before {
+    .play-operators .icon-random:before {
       content: "\E608";
     }
-    .icon-bofangicon:before {
+    .play-operators .icon-bofangicon:before {
       content: "\E603";
     }
-    .icon-prev:before {
+    .play-operators .icon-prev:before {
       content: "\E68C";
     }
-    .icon-like:before {
+    .play-operators .icon-like:before {
       content: "\E600";
     }
-    .icon-stop:before {
+    .play-operators .icon-stop:before {
       content: "\E602";
     }

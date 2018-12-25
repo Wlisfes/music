@@ -29,18 +29,17 @@ export default {
 }
 </script>
 
-<style scoped="scoped">
+<style lang="stylus" scoped>
 @import url('../../assets/css/playerIcon');
 .play-operators {
-    display: flex;
-    align-items: center;
-    height: 40px;
+    display flex;
+    align-items center;
+    height 40px;
 
-    
+    .play-flex {
+        flex 1;
+    }
 }
 
-.play-flex {
-    flex: 1;
-}
 
 </style>
