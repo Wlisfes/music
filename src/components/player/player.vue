@@ -73,7 +73,11 @@ export default {
             //歌手姓名
             singerName: '',
             //歌曲url
-            musicUrl: ''
+            musicUrl: '',
+
+
+
+            lops: false
         }
     },
     computed: {
@@ -139,6 +143,7 @@ export default {
 
             this.$refs.audioRef.play()
             this.set_musicplay(true)
+            this.lops = true
 
         },
         //播放模式执行
@@ -164,7 +169,9 @@ export default {
         },
         //歌曲播放完毕事件
         musicEnd() {
+            this.$refs.audioRef.pause()
             this.set_musicplay(false)
+            this.lops = false
 
             this._musicmode()
             console.log('播放完毕')
@@ -173,11 +180,13 @@ export default {
         pause() {
 
             if (this.musicplay) {
-            
+                this.$refs.audioRef.pause()
                 this.set_musicplay(false)
+                this.lops = false
             } else {
-                
+                this.$refs.audioRef.play()
                 this.set_musicplay(true)
+                this.lops = true
             }
             
         },
@@ -199,16 +208,32 @@ export default {
             this.chengeurl()
         },
         musicplay() {
-            if (this.musicplay) {
-                this.$refs.audioRef.play()
-            } else {
-                this.$refs.audioRef.pause()
-            }
+            // if (this.musicplay) {
+            //     this.$refs.audioRef.play()
+            //     this.set_musicplay(false)
+            // } else {
+            //     this.$refs.audioRef.pause()
+            //     this.set_musicplay(true)
+            // }
         }
     },
     mounted() {
         let m = document.querySelector('#app')
-            m.addEventListener('touchend', this.chengeurl)
+            m.addEventListener('touchend', () => {
+
+                // if(!this.musicUrl) {
+                //     return
+                // }
+
+                // if(this.lops) {
+                //     return
+                // }
+
+
+                this.$refs.audioRef.play()
+                this.set_musicplay(true)
+                this.lops = true
+            })
     }
 }
 </script>
