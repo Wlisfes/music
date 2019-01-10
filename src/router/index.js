@@ -23,7 +23,14 @@ const router = new Router({
                 {
                     path: '/playList',
                     name: 'playList',
-                    component: () => import('@/components/chald/playList')
+                    component: () => import('@/components/chald/playList'),
+                    children: [
+                        {
+                            path: ':id',
+                            name: 'Songer',
+                            component: () => import('@/components/chald/Songer')
+                        }
+                    ]
                 }
             ]
         },

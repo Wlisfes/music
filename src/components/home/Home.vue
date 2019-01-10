@@ -85,6 +85,12 @@ export default {
                 this.lizedList = res.result
             }
         },
+        //推荐新音乐
+        async _getnewsong() {
+            let res = await this.api.getnewsong()
+
+            console.log(res)
+        },
         //选择某个歌单
         selectItem(item) {
             this.$router.push({ path: `/Home/${item.id}` })
@@ -111,7 +117,7 @@ export default {
     created() {
         this._getbanner()
         this._getlized()
-
+        this._getnewsong()
         
     },
     mounted() {
