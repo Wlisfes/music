@@ -3,7 +3,7 @@
 import axios from 'axios'
 import logo from './logo'
 
-axios.defaults.baseURL='http://111.231.222.196'
+axios.defaults.baseURL='http://m.lisfes.cn'
 
 
 //请求拦截器

@@ -5,7 +5,7 @@
                 <div class="decorate"></div>
 
                 <div class="home-swiper">
-                    <swiper :options="swiperOption" ref="mySwiper">
+                    <swiper :options="swiperOption" ref="mySwiper" v-if="bannerList.length > 0">
                         <swiper-slide v-for="(ba,i) in bannerList" :key="i">
                             <img class="swiper-image" :src="ba.imageUrl" >
                         </swiper-slide>
@@ -39,6 +39,7 @@
 <script>
 import bscroll from '../base/bscorll'
 import { mapMutations } from 'vuex'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 export default {
     data() {
@@ -47,7 +48,7 @@ export default {
             bannerList: [],
             //轮播图配置
             swiperOption: {
-                loop: false,
+                loop: true,
                 observer:true,
                 observeParents:true,
                 autoplay:true,
@@ -88,7 +89,9 @@ export default {
         }
     },
     components: {
-        bscroll
+        bscroll,
+        swiper,
+        swiperSlide
     },
     created() {
         this._getbanner()
