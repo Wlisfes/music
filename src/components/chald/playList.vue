@@ -1,6 +1,13 @@
 <template>
     <transition name="playMmen">
         <div class="mmen">
+            <header class="SgerHeader">
+                <div class="back" @click="back">
+                    <i class="iconfont icon-fanhui"></i>
+                </div>
+                <div class="backTitle">推荐歌单</div>
+            </header>
+
             <bscroll class="wrapper" 
             :data="lizedList" 
             :pullup="pullup" 
@@ -20,6 +27,7 @@
                     </div>
                 </div>
             </bscroll>
+            <router-view></router-view>
         </div>
     </transition>
 </template>
@@ -64,7 +72,7 @@ export default {
             if (this.pullupStatus) {
                 this.pullupStatus = false
 
-                if(this.limit < 150) {
+                if(this.limit < 120) {
                     let limit = this.limit + 30
                     this.limit = limit
                     this._getlized()
@@ -76,7 +84,7 @@ export default {
         },
         //选择某个歌单
         selectItem(item) {
-            this.$router.push({ path: `/Home/${item.id}` })
+            this.$router.push({ path: `/playList/${item.id}` })
             this.set_songer_back_image(item.picUrl)
 
         }
@@ -115,8 +123,41 @@ export default {
     bottom 0;
     background-color #fff;
 
+    .SgerHeader {
+        height 44px
+        position relative
+        display flex
+        background-color #e24d37
+        
+        .back {
+            display flex
+            width 46px
+            align-items center
+            justify-content center
+            box-sizing border-box
+
+            .iconfont {
+                font-size 20px
+                font-weight bolder
+                color #fff
+            }
+        }
+
+        .backTitle {
+            flex-grow 1
+            max-width calc(100% - 46px)
+            font-size 18px
+            display flex
+            align-items center
+            color #fff
+            padding-right 46px
+            justify-content center
+        }
+    }
+
     .wrapper {
-        height: 100%;
+        height: calc(100% - 44px);
+        overflow hidden
 
         .wrapper-content {
             padding .16rem 0;

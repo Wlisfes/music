@@ -1,6 +1,8 @@
 <template>
     <div class="m-header" @touchmove.prevent="move">
-        <div class="meun"><i class="iconfont icon-menu"></i></div>
+        <router-link to="/user" class="user" tag="div">
+            <div class="meun"><i class="iconfont icon-menu"></i></div>
+        </router-link>
         <h1 class="m-title">MUSIC</h1>
         <router-link to="/search" class="search" tag="div">
             <div class="linkci">
@@ -21,7 +23,8 @@ export default {
 </script>
 
 
-<style scoped>
+
+<style lang="stylus" scoped>
 .m-header {
     height: 44px;
     position: relative;
@@ -66,6 +69,14 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.m-header .user {
+    width: 44px;
+    height: 44px;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 </style>
