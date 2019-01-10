@@ -10,9 +10,7 @@
             </header>
             <bscroll 
                 class="SgerBscll" 
-                :pullup="bscll.pullup" 
                 :listenScroll="bscll.listenScroll" 
-                @scrollToEnd="scrollToEnd" 
                 @scroll="_scroll" 
                 :data="trackslist">
                 <div class="BscllCont">
@@ -32,7 +30,7 @@
                                 </div>
                             </div>
                             <ul :class="{ active: BscllContpadding }">
-                                <li class="playli" @click="openMalplayer(ks, i)" v-for="(ks, i) in trackslist" :key="i" v-if="i <= 998">
+                                <li class="playli" @click="openMalplayer(ks, i)" v-for="(ks, i) in trackslist" :key="i">
                                     <div class="playli-In">{{i+1}}</div>
                                     <div class="playli-Ct">
                                         <h2>{{ks.name}}</h2>
@@ -64,8 +62,8 @@ export default {
     data() {
         return {
             bscll: {
-                pullup: true,          //派发滚动到底事件
-                pullupCode: true,      //滚动加载是否完成
+              //  pullup: true,          //派发滚动到底事件
+             //   pullupCode: true,      //滚动加载是否完成
                 listenScroll: true,    //派发滚动事件
             },
             //标题文字
@@ -121,7 +119,7 @@ export default {
 
                 this.playAll = tracks.length
                 this.playlist = res.playlist
-                this.trackslist = tracks.slice(0,30)
+                this.trackslist = tracks
 
                 // this.wu.hideToast()
             }
@@ -135,36 +133,6 @@ export default {
             this.set_fullScreen(true)
             this.set_playlist(this.playlist.tracks)
 
-        },
-        //滚动加载
-        scrollToEnd() {
-            if(this.trackslist.length == 0) {
-                return
-            }
-            let pullupCode = this.bscll.pullupCode
-            let tracks = this.playlist.tracks
-            let trackslist = this.trackslist
-
-            if (pullupCode) {
-                this.pullupCode = false
-
-                if (trackslist.length >= tracks.length) {
-                    this.wu.showToast({
-                        title: '没有更多数据了',
-                        mask: false,
-                        icon: 'icon-success',
-                        duration: 1000
-                    })
-                } else {
-                    let i  = trackslist.length + 20 >= tracks.length ? tracks.length : trackslist.length + 20
-                    let list = tracks.slice(trackslist.length, i)
-                    
-                    this.trackslist = trackslist.concat(list)
-                }
-
-
-                this.pullupCode = true
-            }
         },
         //bscrell组件滚动事件
         _scroll(e) {
