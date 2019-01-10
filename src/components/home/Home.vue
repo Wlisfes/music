@@ -15,7 +15,7 @@
                 </div>
 
                 <div class="mmen">
-                    <div class="mmen-title"><h3>推荐歌单</h3></div>
+                    <div class="mmen-title" @click="openplayList"><h3>推荐歌单</h3></div>
                     <div class="mmen-list">
                         <div @click="selectItem(Item)" class="mmen-list-view" v-for="(Item,i) in lizedList" :key="i">
                             <img v-lazy="Item.picUrl" :alt="Item.name">
@@ -65,21 +65,36 @@ export default {
         ...mapMutations([
             'set_songer_back_image'
         ]),
+        //轮播图
         async _getbanner() {
             let res = await this.api.getbanner()
             
-            this.bannerList = res.banners
+            if (res.code == this.code.ROK) {
+                this.bannerList = res.banners
+            }
         },
+        //推荐歌单
         async _getlized() {
-            let res = await this.api.getlized()
+            let res = await this.api.getlized({
+                params: {
+                    limit: 6
+                }
+            })
 
-            this.lizedList = res.result
+            if (res.code == this.code.ROK) {
+                this.lizedList = res.result
+            }
         },
+        //选择某个歌单
         selectItem(item) {
             this.$router.push({ path: `/Home/${item.id}` })
             this.set_songer_back_image(item.picUrl)
 
-        }
+        },
+        //查看推荐歌单
+        openplayList() {
+            this.$router.push({ path: `/playList` })
+        },
     },
     filters: {
         nau(val) {
@@ -185,7 +200,7 @@ export default {
 .mmen .mmen-icon {
     position: absolute;
     top: 3px;
-    right: .16rem;
+    right: .26rem;
     font-size: 10px;
     color: #fff;
 }

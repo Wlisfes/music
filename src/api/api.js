@@ -13,6 +13,11 @@ export const getlized = param => {
     return xhr(param, `/personalized`)
 }
 
+//推荐新音乐
+export const getnewsong = param => {
+    return xhr(param, `/personalized/newsong`)
+}
+
 //歌单详情
 export const getplaylistdet = param => {
     return xhr(param, `/playlist/detail`)

@@ -215,11 +215,10 @@ export default {
             width 46px
             align-items center
             justify-content center
-            padding-left 6px
             box-sizing border-box
 
             .iconfont {
-                font-size 24px
+                font-size 20px
                 font-weight bolder
                 color #fff
             }

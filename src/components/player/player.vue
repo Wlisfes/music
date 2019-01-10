@@ -75,9 +75,7 @@ export default {
             //歌曲url
             musicUrl: '',
 
-
-
-            lops: false
+            loops: false
         }
     },
     computed: {
@@ -108,6 +106,7 @@ export default {
         openMiniplayer() {
             this.set_fullScreen(true)
         },
+        //获取歌曲url
         async _getsongurl() {
             let item = this.playlist[this.playIndex]
 
@@ -143,7 +142,7 @@ export default {
 
             this.$refs.audioRef.play()
             this.set_musicplay(true)
-            this.lops = true
+            
 
         },
         //播放模式执行
@@ -171,7 +170,7 @@ export default {
         musicEnd() {
             this.$refs.audioRef.pause()
             this.set_musicplay(false)
-            this.lops = false
+            
 
             this._musicmode()
             console.log('播放完毕')
@@ -182,11 +181,11 @@ export default {
             if (this.musicplay) {
                 this.$refs.audioRef.pause()
                 this.set_musicplay(false)
-                this.lops = false
+                
             } else {
                 this.$refs.audioRef.play()
                 this.set_musicplay(true)
-                this.lops = true
+                
             }
             
         },
@@ -232,7 +231,7 @@ export default {
 
                 this.$refs.audioRef.play()
                 this.set_musicplay(true)
-                this.lops = true
+                
             })
     }
 }

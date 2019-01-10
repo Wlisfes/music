@@ -5,6 +5,7 @@ import App from './App'
 import store from './store'
 import router from './router'
 import * as api from './api/api'
+import * as code from './api/status'
 import VueLazyLoad from 'vue-lazyload'
 import VueAwesomeSwiper  from 'vue-awesome-swiper'
 import wu from '../static/baplu/wu-ui/wu-ui'
@@ -19,6 +20,8 @@ fastclick.attach(document.body)
 Vue.config.productionTip = false
 Vue.prototype.api = api
 Vue.prototype.wu = wu
+Vue.prototype.code = code
+
 Vue.use(VueAwesomeSwiper)
 Vue.use(VueTouch)
 Vue.use(VueLazyLoad, {
@@ -30,11 +33,10 @@ Vue.use(VueLazyLoad, {
 Vue.prototype.back = () => {
   router.go(-1)
 }
-
+//IOS下用来阻止touchmove事件
 Vue.prototype.move = () => {
   return false
 }
-
 
 
 /* eslint-disable no-new */
