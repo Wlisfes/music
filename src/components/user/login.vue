@@ -3,18 +3,22 @@
         <div class="login">
             <div class="userlogin">
                 <img src="http://lisfes.cn/public/image/akari.jpg" alt="" srcset="">
+                
+                <div class="back" @click="back"></div>
             </div>
 
             <div class="loginForm">
                 <div class="log">
-                    <input type="tel" placeholder="phone" value="">
+                    <input type="tel" max="11" placeholder="phone" v-model="phone" value="">
                 </div>
                 <div class="log">
-                    <input type="password" placeholder="password" value="">
+                    <input type="password" max="18" placeholder="password" v-model="password" value="">
                 </div>
-
             </div>
             
+            <div class="logSubmit">
+                <button class="Submit" @click="LoadSubmit">登录</button>
+            </div>
         </div>
     </transition>
 </template>
@@ -22,7 +26,39 @@
 
 <script>
 export default {
-    
+    name: 'login',
+    data() {
+        return {
+            //手机号
+            phone: '',
+
+            //密码
+            password: ''
+        }
+    },
+    methods: {
+        //点击登录
+        LoadSubmit() {
+            this._phoneLogin()
+        },
+        //提交登录接口
+        async _phoneLogin() {
+            let res = await this.api.phoneLogin({
+                params: {
+                    phone: this.phone,
+                    password: this.password
+                }
+            })
+
+            if (res.code == this.code.ROK) {
+                
+            } else {
+                
+            }
+            console.log(res)
+        }
+    }
+
 }
 </script>
 
@@ -42,7 +78,6 @@ export default {
     right 0
     bottom 0
     top 0
-    // background-color #fff
     background-image url('http://lisfes.cn/public/image/user_login_bg.jpg')
     background-repeat no-repeat
     background-size cover
@@ -56,13 +91,24 @@ export default {
         flex-direction column
         align-items center
         justify-content center
+        position relative
 
         >img {
             width 4rem
-            height 4rem
             border-radius 100%
             will-change transform
             display block
+        }
+
+        .back {
+            width 1.4rem
+            height 1.4rem
+            position absolute
+            left 0
+            top 0
+            background-image url('http://lisfes.cn/public/image/ic_close.png')
+            background-repeat no-repeat
+            background-size cover
         }
     }
 
@@ -77,7 +123,7 @@ export default {
             margin-top .32rem
 
             input {
-                line-height .64rem
+                line-height .68rem
                 width 100%
                 background-color rgba(255,255,255,0)
                 outline none
@@ -94,8 +140,20 @@ export default {
 
     }
 
+    .logSubmit {
+        padding 1rem .5rem
 
-
+        .Submit {
+            width 100%
+            line-height 1.16rem
+            background-color #409EFF
+            border none
+            font-size 16px
+            color #fff
+            display block
+            border-radius .1rem
+        }
+    }
 }
 
 

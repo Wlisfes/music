@@ -4,6 +4,7 @@ import axios from 'axios'
 import logo from './logo'
 
 axios.defaults.baseURL='http://47.106.97.205:3000'
+axios.defaults.withCredentials=true
 
 
 //请求拦截器
@@ -29,7 +30,7 @@ axios.interceptors.response.use(
 
 const xhr = (param, url, type = 'GET') => {
     return new Promise((resolve, reject) => {
-        if (type = 'GET')
+        if (type == 'GET')
             axios.get(url, param).then(res => {
                 resolve(res.data)
             }).catch(e => {

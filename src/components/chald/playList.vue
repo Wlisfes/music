@@ -1,12 +1,7 @@
 <template>
     <transition name="playMmen">
         <div class="mmen">
-            <header class="SgerHeader">
-                <div class="back" @click="back">
-                    <i class="iconfont icon-fanhui"></i>
-                </div>
-                <div class="backTitle">推荐歌单</div>
-            </header>
+            <back :Title="backTitle"></back>
 
             <bscroll class="wrapper" 
             :data="lizedList" 
@@ -34,6 +29,7 @@
 
 <script>
 import bscroll from '../base/bscorll'
+import back from '../nav/back'
 import { mapMutations } from 'vuex'
 export default {
     name: 'playList',
@@ -48,6 +44,9 @@ export default {
             pullup: true,
             //下拉是否结束
             pullupStatus: true,
+
+            //标题
+            backTitle: '推荐歌单'
         }
     },
     methods: {
@@ -100,7 +99,8 @@ export default {
         }
     },
     components: {
-        bscroll
+        bscroll,
+        back
     }
 }
 </script>
@@ -123,40 +123,8 @@ export default {
     bottom 0;
     background-color #fff;
 
-    .SgerHeader {
-        height 44px
-        position relative
-        display flex
-        background-color #e24d37
-        
-        .back {
-            display flex
-            width 46px
-            align-items center
-            justify-content center
-            box-sizing border-box
-
-            .iconfont {
-                font-size 20px
-                font-weight bolder
-                color #fff
-            }
-        }
-
-        .backTitle {
-            flex-grow 1
-            max-width calc(100% - 46px)
-            font-size 18px
-            display flex
-            align-items center
-            color #fff
-            padding-right 46px
-            justify-content center
-        }
-    }
-
     .wrapper {
-        height: calc(100% - 44px);
+        height: calc(100% - 46px);
         overflow hidden
 
         .wrapper-content {

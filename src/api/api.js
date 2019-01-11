@@ -3,9 +3,19 @@
 import xhr from './axios'
 
 
+//使用手机号登录
+export const phoneLogin = param => {
+    return xhr(param, `/login/cellphone`)
+}
+
 //轮播图
 export const getbanner = param => {
     return xhr(param, `/banner`)
+}
+
+//每日推荐歌曲
+export const getRecommendSongs = param => {
+    return xhr(param, `/recommend/songs`)
 }
 
 //推荐歌单

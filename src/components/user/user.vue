@@ -1,6 +1,8 @@
 <template>
     <transition name="user">
         <div class="user" @touchmove.prevent="move">
+            <back :Title="backTitle"></back>
+
             <div class="userbox" @click="openLogin">
                 <div class="userTitle">
                     <img src="http://lisfes.cn/public/image/akari.jpg" alt="" srcset="">
@@ -11,8 +13,6 @@
 
             <author></author>
 
-
-
             <router-view></router-view>
         </div>
     </transition>
@@ -20,16 +20,25 @@
 
 <script>
 import author from './Author'
+import back from '../nav/back'
 export default {
     name: "user",
+    data() {
+        return {
+            //标题
+            backTitle: 'Admin'
+        }
+    },
     methods: {
         //跳转登录页面
         openLogin() {
             this.$router.push({ path: `/user/login` })
         }
+        
     },
     components: {
-        author
+        author,
+        back
     }
 }
 </script>
