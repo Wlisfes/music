@@ -18,6 +18,11 @@ export const getRecommendSongs = param => {
     return xhr(param, `/recommend/songs`)
 }
 
+//每日推荐歌单
+export const getRecommendResource = param => {
+    return xhr(param, `/recommend/resource`)
+}
+
 //推荐歌单
 export const getlized = param => {
     return xhr(param, `/personalized`)

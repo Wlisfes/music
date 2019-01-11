@@ -35,6 +35,20 @@ const router = new Router({
                             component: () => import('@/components/chald/Songer')
                         }
                     ]
+                },
+                {
+                    //每日推荐歌单详情页
+                    path: '/recommend',
+                    name: 'recommend',
+                    component: () => import('@/components/chald/recommend'),
+                    children: [
+                        {
+                            //歌曲详情
+                            path: ':id',
+                            name: 'recommendSonger',
+                            component: () => import('@/components/chald/Songer')
+                        }
+                    ]
                 }
             ]
         },

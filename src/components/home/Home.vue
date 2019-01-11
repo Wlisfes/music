@@ -14,8 +14,27 @@
                     </swiper> 
                 </div>
 
+                <!-- 每日推荐歌单 -->
                 <div class="mmen">
-                    <div class="mmen-title" @click="openplayList"><h3>推荐歌单</h3></div>
+                    <div class="mmen-title" @click="openRecommend"><h3>每日推荐</h3><i class="iconfont icon-fanhui"></i></div>
+                    <div class="mmen-list">
+                        <div @click="selectItem(Item)" class="mmen-list-view" v-for="(Item,i) in recommendList" :key="i">
+                            <img v-lazy="Item.picUrl" :alt="Item.name">
+                            <div class="mmen-list-name">
+                                <p v-html="Item.name"></p>
+                            </div>
+                            <p class="mmen-icon">
+                                <i class="iconfont icon-erji"></i>
+                                {{Item.playcount | nau}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 推荐歌单 -->
+                <div class="mmen">
+                    <div class="mmen-title" @click="openplayList"><h3>推荐歌单</h3><i class="iconfont icon-fanhui"></i></div>
                     <div class="mmen-list">
                         <div @click="selectItem(Item)" class="mmen-list-view" v-for="(Item,i) in lizedList" :key="i">
                             <img v-lazy="Item.picUrl" :alt="Item.name">
@@ -58,7 +77,10 @@ export default {
                 }
             },
             //推荐歌单数据
-            lizedList: []
+            lizedList: [],
+
+            //每日推荐歌单数据
+            recommendList: []
         }
     },
     methods: {
@@ -85,17 +107,24 @@ export default {
                 this.lizedList = res.result
             }
         },
-        //推荐新音乐
-        async _getnewsong() {
-            let res = await this.api.getnewsong()
+        //每日推荐歌单
+        async _getRecommendResource() {
+            let res = await this.api.getRecommendResource()
 
             console.log(res)
+            if (res.code == this.code.ROK) {
+                this.recommendList = res.recommend.slice(0,6)
+            }
         },
-        //选择某个歌单
+        //选择某个推荐歌单
         selectItem(item) {
             this.$router.push({ path: `/Home/${item.id}` })
             this.set_songer_back_image(item.picUrl)
 
+        },
+        //查看每日推荐歌单
+        openRecommend() {
+            this.$router.push({ path: `/recommend` })
         },
         //查看推荐歌单
         openplayList() {
@@ -117,7 +146,7 @@ export default {
     created() {
         this._getbanner()
         this._getlized()
-        this._getnewsong()
+        this._getRecommendResource()
         
     },
     mounted() {
@@ -167,6 +196,14 @@ export default {
 .mmen .mmen-title {
     font-size: 18px;
     padding: .3rem .16rem;
+    display: flex;
+    align-items: center;
+}
+
+.mmen .mmen-title .iconfont {
+    transform: rotateY(180deg);
+    font-size: 14px;
+    margin-left: 5px;
 }
 
 .mmen .mmen-list {

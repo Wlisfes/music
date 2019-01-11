@@ -6,6 +6,8 @@ import store from './store'
 import router from './router'
 import * as api from './api/api'
 import * as code from './api/status'
+import Tou from '../static/baplu/Tou/Tou'
+import '../static/baplu/Tou/Tou.css'
 import VueLazyLoad from 'vue-lazyload'
 import VueAwesomeSwiper  from 'vue-awesome-swiper'
 import wu from '../static/baplu/wu-ui/wu-ui'
@@ -21,6 +23,9 @@ Vue.config.productionTip = false
 Vue.prototype.api = api
 Vue.prototype.wu = wu
 Vue.prototype.code = code
+Vue.prototype.Tou = Tou
+
+Tou.Toast()
 
 Vue.use(VueAwesomeSwiper)
 Vue.use(VueTouch)

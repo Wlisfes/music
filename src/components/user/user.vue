@@ -33,6 +33,7 @@ export default {
         //跳转登录页面
         openLogin() {
             this.$router.push({ path: `/user/login` })
+            
         }
         
     },
