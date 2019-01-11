@@ -6,7 +6,7 @@ function render (method, status, url, other) {
         `🚜%c ${method} %c ${status} %c ${url} %c ${other}`,
         "background:#35495e ; padding: 1px 0; border-radius: 3px 0 0 3px;  color: #fff",
         "background:#009688 ; padding: 1px 0; color: #fff",
-        "background: transparent; border: 1px solid #009688 ; padding: 0px; border-radius: 0 3px 3px 0;  color: #fff",
+        "background: transparent; border: 1px solid #009688 ; padding: 0px; border-radius: 0 3px 3px 0;  color: #000",
         "background:transparent; color: #90939975"
       ]
     } else {
@@ -19,9 +19,19 @@ function render (method, status, url, other) {
       ]
     }
 }
+
+function len(url, int) {
+    if(!int) {
+      return url
+    }
+    let intlen = int.toString().length
+    let liurl = url.slice(url.indexOf(int) + intlen)
+
+    return liurl
+}
   
 export default function (req, res) {
-    console.groupCollapsed(...render(res.config.method.toUpperCase(), res.status, res.config.url, req.constructor.name))
+    console.groupCollapsed(...render(res.config.method.toUpperCase(), res.status, len(res.config.url,3000), req.constructor.name))
     if (res.config) { // just axios maybe
       console.group('🍍 Request')
       console.log('📜 Headers', res.config.headers)
