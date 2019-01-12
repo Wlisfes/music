@@ -17,3 +17,6 @@ export const musicplay = state => state.musicplay
 
 //获取播放模式
 export const musicmode = state => state.musicmode
+
+//获取用户数据
+export const userInfo = state => state.userInfo

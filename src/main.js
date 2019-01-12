@@ -25,7 +25,7 @@ Vue.prototype.wu = wu
 Vue.prototype.code = code
 Vue.prototype.Tou = Tou
 
-Tou.Toast()
+
 
 Vue.use(VueAwesomeSwiper)
 Vue.use(VueTouch)

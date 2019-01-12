@@ -18,6 +18,9 @@ export default {
     },
     set_musicmode(state, i) {
         state.musicmode = i
+    },
+    set_userInfo(state, info) {
+        state.userInfo = info
     }
 
 

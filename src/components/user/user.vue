@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import author from './Author'
 import back from '../nav/back'
 export default {
@@ -28,6 +29,11 @@ export default {
             //标题
             backTitle: 'Admin'
         }
+    },
+    computed: {
+        ...mapGetters([
+            'userInfo'
+        ])
     },
     methods: {
         //跳转登录页面

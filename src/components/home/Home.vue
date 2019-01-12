@@ -31,7 +31,6 @@
                     </div>
                 </div>
 
-
                 <!-- 推荐歌单 -->
                 <div class="mmen">
                     <div class="mmen-title" @click="openplayList"><h3>推荐歌单</h3><i class="iconfont icon-fanhui"></i></div>
@@ -120,7 +119,6 @@ export default {
         selectItem(item) {
             this.$router.push({ path: `/Home/${item.id}` })
             this.set_songer_back_image(item.picUrl)
-
         },
         //查看每日推荐歌单
         openRecommend() {

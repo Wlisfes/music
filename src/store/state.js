@@ -1,6 +1,9 @@
 'use strict'
 
 const state = {
+    //用户登录数据
+    userInfo: '',
+
     //歌单背景图片
     songer_back_image: '',
     

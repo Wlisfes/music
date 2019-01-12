@@ -31,7 +31,7 @@ function len(url, int) {
 }
   
 export default function (req, res) {
-    console.groupCollapsed(...render(res.config.method.toUpperCase(), res.status, len(res.config.url,3000), req.constructor.name))
+    console.groupCollapsed(...render(res.config.method.toUpperCase(), res.status, res.config.url, req.constructor.name))
     if (res.config) { // just axios maybe
       console.group('🍍 Request')
       console.log('📜 Headers', res.config.headers)

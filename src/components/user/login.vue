@@ -2,7 +2,7 @@
     <transition name="login">
         <div class="login">
             <div class="userlogin">
-                <img src="http://lisfes.cn/public/image/akari.jpg" alt="" srcset="">
+                <img :src="userInfo.avatarUrl ? userInfo.avatarUrl : 'http://lisfes.cn/public/image/akari.jpg'" alt="" srcset="">
                 
                 <div class="back" @click="back"></div>
             </div>
@@ -25,6 +25,8 @@
 
 
 <script>
+import { mapMutations,mapGetters } from 'vuex'
+import axios from 'axios'
 export default {
     name: 'login',
     data() {
@@ -36,13 +38,25 @@ export default {
             password: ''
         }
     },
+    computed: {
+        ...mapGetters([
+            'userInfo'
+        ])
+    },
     methods: {
+        ...mapMutations([
+            'set_userInfo'
+        ]),
         //点击登录
         LoadSubmit() {
             this._phoneLogin()
         },
         //提交登录接口
         async _phoneLogin() {
+            // this.Tou.Loading({
+            //     title: '登录中...'
+            // })
+
             let res = await this.api.phoneLogin({
                 params: {
                     phone: this.phone,
@@ -50,11 +64,14 @@ export default {
                 }
             })
 
-            if (res.code == this.code.ROK) {
+            // this.Tou.HideLoading()
+            // if (res.code == this.code.ROK) {
+            //     localStorage.setItem('userInfo_', res.profile)
+            //     this.set_userInfo(res.profile)
+            //     this.back()
+            // } else {
                 
-            } else {
-                
-            }
+            // }
             console.log(res)
         }
     }
