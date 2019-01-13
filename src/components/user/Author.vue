@@ -25,7 +25,7 @@ export default {
     margin-top .32rem
     padding-left .32rem
     background-color #ffffff
-
+    
     .list {
         width 100%
         box-sizing border-box

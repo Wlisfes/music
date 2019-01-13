@@ -33,6 +33,7 @@ class Tou {
         this.ToastTitle = ops.title || this.ToastTitle
 
         let Element = document.createElement('div')
+        
 
         Element.setAttribute('id', 'Tou-Toast')
         Element.style.animation = `Tou-Toast ${this.time}ms 1`

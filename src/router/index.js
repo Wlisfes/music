@@ -17,7 +17,7 @@ const router = new Router({
             component: () => import('@/components/home/Home'),
             children: [
                 {
-                    //歌曲详情
+                    //歌单详情
                     path: ':id',
                     name: 'Songer',
                     component: () => import('@/components/chald/Songer')
@@ -29,7 +29,7 @@ const router = new Router({
                     component: () => import('@/components/chald/playList'),
                     children: [
                         {
-                            //歌曲详情
+                            //歌单详情
                             path: ':id',
                             name: 'playListSonger',
                             component: () => import('@/components/chald/Songer')
@@ -43,7 +43,7 @@ const router = new Router({
                     component: () => import('@/components/chald/recommend'),
                     children: [
                         {
-                            //歌曲详情
+                            //歌单详情
                             path: ':id',
                             name: 'recommendSonger',
                             component: () => import('@/components/chald/Songer')
@@ -80,7 +80,13 @@ const router = new Router({
                     path: 'login',
                     name: 'login',
                     component: () => import('@/components/user/login')
-                }
+                },
+                {
+                    //歌单详情
+                    path: ':id',
+                    name: 'userSonger',
+                    component: () => import('@/components/chald/Songer')
+                },
             ]
         }
     ]

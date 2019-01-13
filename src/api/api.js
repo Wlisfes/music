@@ -8,6 +8,11 @@ export const phoneLogin = param => {
     return xhr(param, `/login/cellphone`)
 }
 
+//获取用户歌单
+export const getUserPlaylist = param => {
+    return xhr(param, `/user/playlist`)
+}
+
 //轮播图
 export const getbanner = param => {
     return xhr(param, `/banner`)

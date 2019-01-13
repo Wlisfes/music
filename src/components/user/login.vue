@@ -2,7 +2,7 @@
     <transition name="login">
         <div class="login">
             <div class="userlogin">
-                <img :src="userInfo.avatarUrl ? userInfo.avatarUrl : 'http://lisfes.cn/public/image/akari.jpg'" alt="" srcset="">
+                <img :src="userInfo ? userInfo.avatarUrl : 'http://lisfes.cn/public/image/akari.jpg'" alt="" srcset="">
                 
                 <div class="back" @click="back"></div>
             </div>
@@ -53,9 +53,9 @@ export default {
         },
         //提交登录接口
         async _phoneLogin() {
-            // this.Tou.Loading({
-            //     title: '登录中...'
-            // })
+            this.Tou.Loading({
+                title: '登录中...'
+            })
 
             let res = await this.api.phoneLogin({
                 params: {
@@ -64,14 +64,14 @@ export default {
                 }
             })
 
-            // this.Tou.HideLoading()
-            // if (res.code == this.code.ROK) {
-            //     localStorage.setItem('userInfo_', res.profile)
-            //     this.set_userInfo(res.profile)
-            //     this.back()
-            // } else {
+            this.Tou.HideLoading()
+            if (res.code == this.code.ROK) {
+                localStorage.setItem('userInfo_', JSON.stringify(res.profile))
+                this.set_userInfo(res.profile)
+                this.back()
+            } else {
                 
-            // }
+            }
             console.log(res)
         }
     }

@@ -3,16 +3,25 @@
         <div class="user" @touchmove.prevent="move">
             <back :Title="backTitle"></back>
 
-            <div class="userbox" @click="openLogin">
-                <div class="userTitle">
-                    <img src="http://lisfes.cn/public/image/akari.jpg" alt="" srcset="">
-                    <p class="userName">未登录</p>
+            <bscroll class="wrapper">
+                <div class="wrapper-content" :class="{'active': !fullScreen}">
+                    <div class="userbox" @click="openLogin">
+                        <div class="userTitle">
+                            <img :src="userInfo ? userInfo.avatarUrl : 'http://lisfes.cn/public/image/akari.jpg'" alt="" srcset="">
+                            <p class="userName" v-html="userInfo ? userInfo.nickname : '未登录'"></p>
+                        </div>
+                    </div>
+
+                    <userplaylist 
+                    :userPlaylist="userPlaylist"
+                    :userStarlist="userStarlist" 
+                    @openuser="openuser" 
+                    v-show="userInfo">
+                    </userplaylist>
+                    <author></author>
                 </div>
-            </div>
-
-
-            <author></author>
-
+            </bscroll>
+            
             <router-view></router-view>
         </div>
     </transition>
@@ -20,32 +29,83 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import bscroll from '../base/bscorll'
 import author from './Author'
+import userplaylist from './userplaylist'
 import back from '../nav/back'
 export default {
     name: "user",
     data() {
         return {
             //标题
-            backTitle: 'Admin'
+            backTitle: 'Admin',
+
+            //用户创建歌单
+            userPlaylist: [],
+
+            //用户收藏歌单
+            userStarlist: []
         }
     },
     computed: {
         ...mapGetters([
-            'userInfo'
+            'userInfo',
+            'fullScreen'
         ])
     },
     methods: {
         //跳转登录页面
         openLogin() {
-            this.$router.push({ path: `/user/login` })
-            
+            if(!this.userInfo) {
+                this.$router.push({ path: `/user/login` })
+            }
+        },
+        //获取用户歌单
+        async _getUserPlaylist() {
+            if(this.userInfo && this.userInfo.userId != "") {
+                let res = await this.api.getUserPlaylist({
+                    params: {
+                        uid: this.userInfo.userId
+                    }
+                })
+                
+                if (res.code == this.code.ROK) {
+                    let play = res.playlist
+                    let userStarlist = [], userPlaylist = []
+
+                    play.forEach(element => {
+                        if (element.userId == this.userInfo.userId) {
+                            userPlaylist.push(element)
+                        } else {
+                            userStarlist.push(element)
+                        }
+                    })
+
+                    this.userPlaylist = userPlaylist
+                    this.userStarlist = userStarlist
+                }
+            }
+        },
+        //用户歌单打开 or 关闭
+        openuser(ops) {
+            console.log(ops)
         }
-        
+      
+    },
+    created() {
+        this._getUserPlaylist()
+        console.log(this.fullScreen)
+    },
+    watch: {
+        userInfo() {
+            this._getUserPlaylist()
+        }
     },
     components: {
         author,
-        back
+        back,
+        userplaylist,
+        bscroll
     }
 }
 </script>
@@ -67,36 +127,52 @@ export default {
     bottom: 0;
     background: #EDECE8;
 
-    .userbox {
-        padding .5rem
-        display flex
-        flex-direction column
-        align-items center
-        justify-content center
-        background-color #ffffff
+    .wrapper {
+        height calc(100% - 46px)
+        overflow hidden
 
-        .userTitle {
+        .wrapper-content {
+            min-height 100%
 
-            >img {
-                width 4rem
-                height 4rem
-                border-radius 100%
-                will-change transform
-                display block
+            .userbox {
+                padding .5rem
+                display flex
+                flex-direction column
+                align-items center
+                justify-content center
+                background-color #ffffff
+
+                .userTitle {
+
+                    >img {
+                        width 4rem
+                        height 4rem
+                        border-radius 100%
+                        will-change transform
+                        display block
+                    }
+
+                    .userName {
+                        font-size .48rem
+                        padding-top .4rem
+                        letter-spacing 4px
+                        color #333333
+                        text-align center
+                        height 1rem
+                        box-sizing border-box
+                    }
+                }
+
             }
 
-            .userName {
-                font-size .48rem
-                padding-top .4rem
-                letter-spacing 4px
-                color #333333
-                text-align center
-                height 1rem
-                box-sizing border-box
-            }
+        }
+        .active {
+            padding-bottom 80px
         }
 
     }
+
+
 
 
 

@@ -15,10 +15,10 @@
                 </div>
 
                 <!-- 每日推荐歌单 -->
-                <div class="mmen">
+                <div class="mmen" v-if="recommendList.length > 0">
                     <div class="mmen-title" @click="openRecommend"><h3>每日推荐</h3><i class="iconfont icon-fanhui"></i></div>
                     <div class="mmen-list">
-                        <div @click="selectItem(Item)" class="mmen-list-view" v-for="(Item,i) in recommendList" :key="i">
+                        <div @click="selectPlayList(Item)" class="mmen-list-view" v-for="(Item,i) in recommendList" :key="i">
                             <img v-lazy="Item.picUrl" :alt="Item.name">
                             <div class="mmen-list-name">
                                 <p v-html="Item.name"></p>
@@ -32,10 +32,10 @@
                 </div>
 
                 <!-- 推荐歌单 -->
-                <div class="mmen">
+                <div class="mmen" v-if="lizedList.length > 0">
                     <div class="mmen-title" @click="openplayList"><h3>推荐歌单</h3><i class="iconfont icon-fanhui"></i></div>
                     <div class="mmen-list">
-                        <div @click="selectItem(Item)" class="mmen-list-view" v-for="(Item,i) in lizedList" :key="i">
+                        <div @click="selectPlayList(Item)" class="mmen-list-view" v-for="(Item,i) in lizedList" :key="i">
                             <img v-lazy="Item.picUrl" :alt="Item.name">
                             <div class="mmen-list-name">
                                 <p v-html="Item.name"></p>
@@ -56,7 +56,7 @@
 
 <script>
 import bscroll from '../base/bscorll'
-import { mapMutations } from 'vuex'
+import { mapMutations,mapGetters } from 'vuex'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 export default {
@@ -81,6 +81,11 @@ export default {
             //每日推荐歌单数据
             recommendList: []
         }
+    },
+    computed: {
+        ...mapGetters([
+            'userInfo'
+        ])
     },
     methods: {
         ...mapMutations([
@@ -108,15 +113,18 @@ export default {
         },
         //每日推荐歌单
         async _getRecommendResource() {
+            if(!this.userInfo) {
+                return false
+            }
+
             let res = await this.api.getRecommendResource()
 
-            console.log(res)
             if (res.code == this.code.ROK) {
                 this.recommendList = res.recommend.slice(0,6)
             }
         },
         //选择某个推荐歌单
-        selectItem(item) {
+        selectPlayList(item) {
             this.$router.push({ path: `/Home/${item.id}` })
             this.set_songer_back_image(item.picUrl)
         },

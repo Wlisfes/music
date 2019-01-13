@@ -29,7 +29,7 @@
                                     <span>收藏 ({{playlist.subscribedCount | star}})</span>
                                 </div>
                             </div>
-                            <ul :class="{ active: BscllContpadding }">
+                            <ul :class="{ 'active' : !fullScreen }">
                                 <li class="playli" @click="openMalplayer(ks, i)" v-for="(ks, i) in trackslist" :key="i">
                                     <div class="playli-In">{{i+1}}</div>
                                     <div class="playli-Ct">
@@ -76,8 +76,6 @@ export default {
             playAll: 0,
             //歌单中的部分歌曲
             trackslist: [],
-            //是否添加
-            BscllContpadding: false
         }
     },
     computed: {
@@ -148,20 +146,11 @@ export default {
     },
     filters: {
         star(val) {
-            if (val < 10000) return '1万'
+            if (val < 10000) return 125
             if (val > 99999999) return '9999万+'
             var i = (val / 10000).toFixed(1)
 
             return i + '万'
-        }
-    },
-    watch: {
-        fullScreen() {
-            if (this.fullScreen) {
-                this.BscllContpadding = false
-            } else {
-                this.BscllContpadding = true
-            }
         }
     },
     created() {
