@@ -5,7 +5,7 @@
                 <a href="https://github.com/Wlisfes/music" target="_blank" rel="noopener noreferrer">Github</a>
             </div>
             <div class="list">UT77243</div>
-            <div class="list" @click="_getRecommendSongs">关于</div>
+            <div class="list">关于</div>
         </div>
 
         <div class="Atue" v-if="userInfo">
