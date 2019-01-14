@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <bscroll class="wrapper" :data="lizedList">
-            <div class="home-Conent">
+            <div class="home-Conent" :class="{'active': !fullScreen && playIndex != -1}">
                 <div class="decorate"></div>
 
                 <div class="home-swiper">
@@ -84,7 +84,9 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'userInfo'
+            'userInfo',
+            'fullScreen',
+            'playIndex'
         ])
     },
     methods: {
@@ -191,6 +193,10 @@ export default {
     height: 100%;
 }
 
+.home .wrapper .active {
+    padding-bottom: 60px;
+}
+
 .home .decorate {
     position: absolute;
     top: -33vh;
@@ -247,7 +253,7 @@ export default {
 .mmen .mmen-list-view img {
     width: 100%;
     display: block;
-    border-radius: 5px;
+    border-radius: .1rem;
 }
 
 .mmen .mmen-list-name {

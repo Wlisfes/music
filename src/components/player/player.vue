@@ -19,7 +19,7 @@
                 <div class="middle">
                     <div class="middle-l">
                         <div class="cd-wrapper">
-                            <div class="cd play">
+                            <div class="cd" :class="classNameplay">
                                 <img :src="musicImage ? musicImage : songer_back_image" class="image">
                             </div>
                         </div>
@@ -86,7 +86,10 @@ export default {
             'musicplay',
             'musicmode',
             'songer_back_image'
-        ])   
+        ]),
+        classNameplay() {
+            return this.musicplay ? 'play' : 'pause'
+        }
     },
     components: {
         'play-operators': playoperators
@@ -343,6 +346,7 @@ export default {
                         }
                         &.pause {
                             animation-play-state: paused;
+                            animation: rotate 20s linear infinite;
                             -webkit-animation-play-state:paused;
                         }
 

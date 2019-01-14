@@ -197,7 +197,7 @@ export default {
         height 44px
         position relative
         display flex
-        // background-color rgba(226,77,55,1)
+        background-color rgba(226,77,55,1)
         box-sizing border-box
         padding-right 46px
         

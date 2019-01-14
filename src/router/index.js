@@ -56,7 +56,15 @@ const router = new Router({
             
             path: '/Rank',
             name: 'Rank',
-            component: () => import('@/components/home/Rank')
+            component: () => import('@/components/home/Rank'),
+            children:[
+                {
+                    //歌单详情
+                    path: ':id',
+                    name: 'RankSonger',
+                    component: () => import('@/components/chald/Songer')
+                }
+            ]
         },
         {
             path: '/Singer',

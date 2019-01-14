@@ -1,7 +1,12 @@
 <template>
     <div class="play">
         <div class="playlist">
-            <div class="playlist-title" @click="openuser">我创建的歌单</div>
+            <div class="playlist-title" @click="openuser">
+                我创建的歌单
+                <div class="icon" :style="userdeg">
+                    <i class="iconfont icon-fanhui"></i>
+                </div>
+            </div>
             <div class="playlist-el" v-show="userPlaylist && shwouser">
                 <div class="fwel" @click="selectPlayLisy(pls)" v-for="(pls, i) in userPlaylist" :key="i">
                     <img :src="pls.coverImgUrl" alt="" srcset="">
@@ -14,7 +19,12 @@
         </div>
 
         <div class="playlist">
-            <div class="playlist-title" @click="openstar">我创建的歌单</div>
+            <div class="playlist-title" @click="openstar">
+                我创建的歌单
+                <div class="icon" :style="stardeg">
+                    <i class="iconfont icon-fanhui"></i>
+                </div>
+            </div>
             <div class="playlist-el" v-if="userStarlist && showstar">
                 <div class="fwel" @click="selectPlayLisy(pls)" v-for="(pls, i) in userStarlist" :key="i">
                     <img :src="pls.coverImgUrl" alt="" srcset="">
@@ -70,6 +80,14 @@ export default {
             this.$router.push({ path: `/user/${ops.id}` })
             this.set_songer_back_image(ops.coverImgUrl)
         }
+    },
+    computed: {
+        stardeg() {
+            return this.showstar ? "transform: translateY(-50%) rotateZ(270deg)": ''
+        },
+        userdeg() {
+            return this.shwouser ? "transform: translateY(-50%) rotateZ(270deg)": ''
+        }
     }
 }
 </script>
@@ -88,6 +106,18 @@ export default {
             color #555
             padding 0.32rem 0
             position relative
+
+            .icon {
+                position absolute
+                right .5rem
+                top 50%
+                transform translateY(-50%) rotateZ(180deg)
+                transition all 300ms
+
+                .iconfont{
+                    font-size .34rem
+                }
+            }
         }
 
         .playlist-el {
