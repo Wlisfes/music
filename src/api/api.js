@@ -13,14 +13,14 @@ export const getUserPlaylist = param => {
     return xhr(param, `/user/playlist`)
 }
 
-//轮播图
-export const getbanner = param => {
-    return xhr(param, `/banner`)
-}
-
 //每日推荐歌曲
 export const getRecommendSongs = param => {
     return xhr(param, `/recommend/songs`)
+}
+
+//轮播图
+export const getbanner = param => {
+    return xhr(param, `/banner`)
 }
 
 //每日推荐歌单
@@ -53,7 +53,10 @@ export const getsongurl = param => {
     return xhr(param, `/song/url`)
 }
 
-
+//所有榜单
+export const getToplist = param => {
+    return xhr(param, `/toplist/detail`)
+}
 
 
 

@@ -15,7 +15,7 @@
                 </div>
 
                 <!-- 每日推荐歌单 -->
-                <div class="mmen" v-if="recommendList.length > 0">
+                <div class="mmen" v-if="recommendList.length > 0 && userInfo">
                     <div class="mmen-title" @click="openRecommend"><h3>每日推荐</h3><i class="iconfont icon-fanhui"></i></div>
                     <div class="mmen-list">
                         <div @click="selectPlayList(Item)" class="mmen-list-view" v-for="(Item,i) in recommendList" :key="i">
@@ -111,6 +111,18 @@ export default {
                 this.lizedList = res.result
             }
         },
+        //每日推荐歌曲
+        async _getRecommendSongs() {
+            if(!this.userInfo) {
+                return false
+            }
+
+            let res = await this.api.getRecommendSongs()
+
+            if(res.code == this.code.ROK) {
+                console.log(res)
+            }
+        },
         //每日推荐歌单
         async _getRecommendResource() {
             if(!this.userInfo) {
@@ -149,11 +161,17 @@ export default {
         swiper,
         swiperSlide
     },
+    watch: {
+        userInfo() {
+            this._getRecommendResource()
+            // this._getRecommendSongs()
+        }
+    },
     created() {
         this._getbanner()
         this._getlized()
         this._getRecommendResource()
-        
+        // this._getRecommendSongs()
     },
     mounted() {
         

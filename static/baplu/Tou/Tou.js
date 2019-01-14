@@ -2,8 +2,6 @@
 
 class Tou {
     constructor(){
-        this.el = document.createElement('div')
-        this.el.setAttribute('id', 'Tou')
         this.mask = false
         this.move = true
         this.time = 3000
@@ -11,10 +9,32 @@ class Tou {
 
         this.ToastTitle = 'Toast'
         this.LocationTitle = 'Loading...'
+
+        this.MoToatsTitle = 'MoToats'
+        this.MoToatsText = 'MoToatsText'
+        this.MotoastSuccessText = '确定'
+        this.MotoastFailText = '取消'
+        this.showFail = true
     }
 
-    ElementMove() {
-        this.el.addEventListener('touchmove',(e) => {
+    El(Element) {
+        let El = document.createElement('div')
+            El.setAttribute('id', 'Tou')
+            El.appendChild(Element)
+            this.ElementMove(El)
+        return El
+    }
+
+    Success() {
+        return 1
+    }
+
+    Fail() {
+        return 0
+    }
+
+    ElementMove(Element) {
+        Element.addEventListener('touchmove',(e) => {
             if (e.preventDefault && this.move) e.preventDefault()
         })
     }
@@ -80,6 +100,62 @@ class Tou {
     HideLoading() {
         this.ElementRemove(document.querySelector("#Tou-Loading"))
     }
+
+    /**
+     * 
+     * @param { Object } ops
+     * @param { String } title
+     * @param { String } Text
+     * @param { String } SuText
+     * @param { String } FaText
+     * @param { Boolean } backColor
+     * @param { Boolean } showfail
+     * @param { Function } success
+     * @param { Function } fail
+     */
+    MoToats(ops) {
+        ops = ops || {}
+        this.MoToatsTitle = ops.title || this.MoToatsTitle
+        this.MoToatsText = ops.Text || this.MoToatsText
+        this.MotoastSuccessText = ops.SuText || this.MotoastSuccessText
+        this.MotoastFailText = ops.FaText || this.MotoastFailText
+        this.backColor = ops.backColor || this.backColor
+        this.showFail = ops.showfail || this.showFail
+        
+        let Element = document.createElement('div')
+        
+        
+
+        Element.setAttribute('id', 'Tou-MoToast')
+        Element.innerHTML = `<div class="MoToas-tTitle">${this.MoToatsTitle}</div>
+                             <div class="Motost-content">${this.MoToatsText}</div>
+                             <div class="MotostBtn">
+                                <div id="MoToastFail">${this.MotoastFailText}</div>
+                                <div id="MoToastSuccess">${this.MotoastSuccessText}</div>
+                             </div>
+                            `
+
+        let Fragment = document.createDocumentFragment()
+        let ModeEl = this.backColor ? this.El(Element) : Element
+            Fragment.appendChild(ModeEl)
+            this.ElementChild(Fragment)
+        
+        document.querySelector("#MoToastSuccess").addEventListener('click',() => {
+            ops.success ? ops.success({code:1}) : this.Success()
+            this.ElementRemove(ModeEl)
+        })
+        if(this.showFail) {
+            document.querySelector("#MoToastFail").addEventListener('click',() => {
+                ops.fail ? ops.fail({code:1}) : this.Fail({code:0})
+                this.ElementRemove(ModeEl)
+            })
+        } else {
+            document.querySelector("MoToastFail").remove()
+        }
+    }
+
+
+
 }
 
 export default new Tou()

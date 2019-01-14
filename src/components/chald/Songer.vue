@@ -105,7 +105,6 @@ export default {
         },
         //获取歌单详情数据
         async _getplaylistdet() {
-            // this.wu.showLoading('loading...')
             let res = await this.api.getplaylistdet({
                 params: {
                     id: this.id
@@ -118,8 +117,8 @@ export default {
                 this.playAll = tracks.length
                 this.playlist = res.playlist
                 this.trackslist = tracks
+                this.header = res.playlist.name
 
-                // this.wu.hideToast()
             }
         },
         //点击歌曲播放
@@ -190,7 +189,7 @@ export default {
         padding-top 100%
         transform-origin top
         background-size cover
-        background-position 0 30%
+        background-position 0 50%
         filter blur(1px)
     }
 
@@ -198,6 +197,9 @@ export default {
         height 44px
         position relative
         display flex
+        // background-color rgba(226,77,55,1)
+        box-sizing border-box
+        padding-right 46px
         
         .back {
             display flex
@@ -217,9 +219,12 @@ export default {
             flex-grow 1
             max-width calc(100% - 46px)
             font-size 18px
-            display flex
-            align-items center
+            line-height 44px
             color #fff
+            text-align center
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
         }
     }
 

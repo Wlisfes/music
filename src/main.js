@@ -10,8 +10,6 @@ import Tou from '../static/baplu/Tou/Tou'
 import '../static/baplu/Tou/Tou.css'
 import VueLazyLoad from 'vue-lazyload'
 import VueAwesomeSwiper  from 'vue-awesome-swiper'
-import wu from '../static/baplu/wu-ui/wu-ui'
-import '../static/baplu/wu-ui/wu-ui.css'
 import 'swiper/dist/css/swiper.css'
 import fastclick from 'fastclick'
 import VueTouch  from 'v-touch'
@@ -21,7 +19,6 @@ fastclick.attach(document.body)
 
 Vue.config.productionTip = false
 Vue.prototype.api = api
-Vue.prototype.wu = wu
 Vue.prototype.code = code
 Vue.prototype.Tou = Tou
 

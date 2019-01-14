@@ -23,7 +23,11 @@ export default {
       //获取储存的用户数据
       getStorage() {
           let user = localStorage.getItem('userInfo_')
+
+          if(user && user != "" && user && user != null) {
               this.set_userInfo(JSON.parse(user))
+          }
+          
       }
   },
   created() {
