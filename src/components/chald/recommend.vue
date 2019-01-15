@@ -14,7 +14,7 @@
                             </div>
                             <p class="mmen-icon">
                                 <i class="iconfont icon-erji"></i>
-                                {{Item.playCount | nau}}
+                                {{Item.playcount | nau}}
                             </p>
                         </div>
                     </div>
