@@ -16,6 +16,7 @@
     "axios": "^0.18.0",
     "better-scroll": "^1.13.2",
     "fastclick": "^1.0.6",
+    "pinyin": "^2.8.3",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "v-touch": "^1.5.2",

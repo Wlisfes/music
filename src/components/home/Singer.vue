@@ -1,38 +1,66 @@
 <template>
-    <div>
-        singer
+    <div class="singer">
+        <bscorll class="wrapper"
+                 ref="wrapper" 
+                 :data="singers">
+            <div class="wrapper-content" :class="{'active': !fullScreen && playIndex != -1}">
+                <ul class="listView" v-for="(si,i) in singers" :key="i">
+                    <li class="list-group">
+                        <h2 class="list-group-title" v-html="i == 0 ? si.title + '门' : si.title"></h2>
+                        <ul>
+                            <li class="list-group-item" v-for="(item,j) in si.items" :key="j">
+                                <img :src="item.avatar" alt="">
+                                <span class="group-name" v-html="item.name"></span>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </bscorll>
+
+        <div class="list-shortcut">
+            <ul>
+                <li class="item" v-for="(shor, u) in singers" :key="u">{{shor.title}}</li>
+            </ul>
+        </div>
     </div>
 </template>
 
 <script>
+import pinyin from 'pinyin'
+import bscorll from '../base/bscorll'
+import { mapMutations,mapGetters } from 'vuex'
 
-export class Singer {
-  // 传入一个对象
-  constructor({id, name}) {
-    this.id = id
-    this.name = name
-    this.avatar = `https://y.gtimg.cn/music/photo_new/T001R300x300M000${id}.jpg?max_age=2592000`
-  }
+const HOT_NAME = '热'
+const HOT_SINGERS = 10
+
+class Singer {
+    constructor ({id, name, avatar, aliaName}) {
+        this.id = id
+        this.name = name
+        this.avatar = avatar
+        this.aliaName = aliaName
+    }
 }
-
-// 工厂方式创建类实例
-export function createSinger(singer) {
-  return new Singer({
-    id: singer.id,
-    name: singer.name
-  })
-}
-
-const HOT_TITLE = '热门'
-const HTO_NUM = 10
 
 export default {
     data() {
         return {
-
+            singers: []
         }
     },
+    computed: {
+        ...mapGetters([
+            'fullScreen',
+            'playIndex'
+        ])
+    },
     methods: {
+        ...mapMutations([
+            'set_songer_back_image'
+        ]),
+        //获取歌手数据
         async _getSingerlist() {
             let res = await this.api.getSingerlist({
                 params: {
@@ -40,59 +68,71 @@ export default {
                 }
             })
 
-            // console.log(res)
-            let list = this._formatSingers(res.artists)
+            if(res.code == this.code.ROK) {
+                let s = res.artists
+                s.map((item) => {
+                    let py = pinyin(item.name[0], {
+                        style: pinyin.STYLE_FIRST_LETTER
+                    })
 
-            console.log(list)
+                    item.initial = py[0][0].toUpperCase()
+                })
+
+                this.singers = this._normalizeSinger(s)
+
+                console.log(this.singers)
+            }
         },
-        _formatSingers(list) {
+        _normalizeSinger(list) {
             // 热门歌手
             let map = {
-                hot: {
-                title: HOT_TITLE,
-                items: []
+                    hot: {
+                    title: HOT_NAME,
+                    items: []
                 }
             }
-            // 填充歌手数据
+
             list.forEach((item, index) => {
-                // 填充热门歌手数据
-                if (index < HTO_NUM) {
-                    map.hot.items.push(createSinger(item))
+                if (index < HOT_SINGERS) {
+                    map.hot.items.push(new Singer({
+                        id: item.id,
+                        name: item.name,
+                        avatar: item.img1v1Url,
+                        aliaName: item.alias.join(' / ')
+                    }))
                 }
 
-                // 填充 a-z 字母
-                let key = item.name
+                const key = item.initial
                 if (!map[key]) {
                     map[key] = {
                         title: key,
                         items: []
                     }
                 }
-                // 填充对应字母歌手数据
-                map[key].items.push(createSinger(item))
+
+                map[key].items.push(new Singer({
+                    id: item.id,
+                    name: item.name,
+                    avatar: item.img1v1Url,
+                    aliaName: item.alias[0]
+                }))
             })
 
-
-            // 得到有序列表
             let hot = []
-            let others = []
-
-            console.log(map)
-            for (let key in map) {
-                let value = map[key]
-                if (value.title.match(/[a-zA-Z]/)) {
-                    others.push(value)
-                } else if (value.title === HOT_TITLE) {
-                    hot.push(value)
+            let ret = []
+            for (const key in map) {
+                let val = map[key]
+                if (val.title.match(/[A-Z]/)) {
+                    ret.push(val)
+                } else if (val.title === HOT_NAME) {
+                    hot.push(val)
                 }
             }
 
-            others.sort((a, b) => {
+            ret.sort((a, b) => {
                 return a.title.charCodeAt(0) - b.title.charCodeAt(0)
             })
-                // console.log(hot.concat(others))
-            
-            return hot.concat(others)
+            return hot.concat(ret)
         }
 
 
@@ -102,11 +142,102 @@ export default {
         this._getSingerlist()
     },
     components: {
-        
+        bscorll
     }
 }
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
+.singer {
+    width 100%
+    height calc(100vh - 88px)
+    overflow hidden
+    position relative
+
+    .wrapper {
+        height 100%
+        overflow hidden
+
+        .wrapper-content {
+            .listView {
+                .list-group {
+                    .list-group-title {
+                        font-size .32rem
+                        background rgba(0,0,0,.1)
+                        color #fff
+                        line-height .6rem
+                        padding-left .3rem
+                        margin-bottom .25rem
+                    }
+                    >ul {
+                        padding-bottom .3rem
+
+                        .list-group-item {
+                            position relative
+                            padding .15rem 0
+                            margin 0 .15rem
+                            display flex
+                            align-items center
+                            font-size .38rem
+                            color #555
+
+                            >img {
+                                width 1.5rem
+                                display block
+                                border-radius .1rem
+                            }
+
+                            >span {
+                                margin-left .5rem
+                            }
+
+                            &:after {
+                                content: "";
+                                width: 100%;
+                                height: 1px;
+                                background-color: #e4e4e4;
+                                position: absolute;
+                                left: 0;
+                                bottom: 0;
+                                transform: scaleY(0.5);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        >.active {
+            padding-bottom 60px
+        }
+    }
+
+    .list-shortcut {
+        position absolute
+        right 5px
+        top 0
+        bottom 0
+        display flex
+        justify-content center
+        align-items center
+        font-family: Helvetica;
+        width 20px
+        
+        >ul {
+            .item {
+                font-size 10px
+                color #555
+                font-weight 700
+                line-height 20px
+                width 20px
+                text-align center
+            }
+        }
+    }
+}
+
+
+
+
 
 </style>
+
