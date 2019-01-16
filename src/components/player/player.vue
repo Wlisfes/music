@@ -49,7 +49,18 @@
         <transition name="mini">
             <div class="mini" v-show="!fullScreen" @click="openMiniplayer" @touchmove.prevent="move">
                 <div class="mini-player">
-
+                    <div class="mini-player-icon">
+                        <div class="cd" :class="classNameplay">
+                            <img :src="musicImage ? musicImage : songer_back_image" class="image">
+                        </div> 
+                    </div>
+                    <div class="text">
+                        <p v-html="musicName"></p>
+                        <div class="desc" v-html="singerName"></div>
+                    </div>
+                    <div class="round">
+                        <round-progress @playc="pause"></round-progress>
+                    </div>
                 </div>
             </div>
         </transition>
@@ -63,6 +74,8 @@
 <script>
 import { mapGetters,mapMutations } from 'vuex'
 import playoperators from './play-operators'
+import Roundprogress from './Round-progress'
+
 export default {
     data() {
         return {
@@ -92,7 +105,8 @@ export default {
         }
     },
     components: {
-        'play-operators': playoperators
+        'play-operators': playoperators,
+        'round-progress': Roundprogress
     },
     methods: {
         ...mapMutations([
@@ -114,7 +128,7 @@ export default {
             let item = this.playlist[this.playIndex]
 
             this.musicImage = item.al.picUrl
-            this.musicName = item.al.name
+            this.musicName = item.name
             this.singerName = item.ar[0].name
 
             let res = await this.api.getsongurl({
@@ -220,8 +234,8 @@ export default {
         }
     },
     mounted() {
-        let m = document.querySelector('#app')
-            m.addEventListener('touchend', () => {
+        // let m = document.querySelector('#app')
+            // m.addEventListener('touchend', () => {
 
                 // if(!this.musicUrl) {
                 //     return
@@ -232,10 +246,18 @@ export default {
                 // }
 
 
-                this.$refs.audioRef.play()
-                this.set_musicplay(true)
+                // this.$refs.audioRef.play()
+                // this.set_musicplay(true)
                 
-            })
+            // })
+        window.addEventListener('popstate',() => {
+            if(this.fullScreen) {
+                this.set_fullScreen(false)
+            }
+        })
+            
+        
+        
     }
 }
 </script>
@@ -265,7 +287,7 @@ export default {
                 justify-content center;
 
                 .iconfont {
-                    font-size 24px;
+                    font-size 20px;
                     color #fff;
                 }
             }
@@ -415,9 +437,74 @@ export default {
     background #fff;
 
     .mini-player {
+        height 60px;
         display: flex;
+        flex-direction row
         align-items: center;
         position relative
+        background-color rgb(245,245,245)
+
+        .mini-player-icon {
+            width 40px
+            height 40px
+            margin 0 10px 0 20px
+            position relative
+
+            .cd {
+                width: 100%;
+                height: 100%;
+                box-sizing: border-box;
+                border-radius: 50%;
+
+                &.play {
+                    animation: rotate 20s linear infinite;
+                }
+                &.pause {
+                    animation-play-state: paused;
+                    animation: rotate 20s linear infinite;
+                    -webkit-animation-play-state:paused;
+                }
+
+                .image {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                }
+            }
+        }
+
+        .text {
+            flex 1
+            overflow hidden
+            display flex
+            flex-direction column
+            justify-content center
+
+            >p {
+                margin-bottom: 2px;
+                line-height: 14px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                font-size: 14px;
+                color: #2e3030;
+            }
+            >.desc {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                font-size: 11px;
+                color: #2e3030
+            }
+        }
+
+        .round {
+            width 30px
+            padding 0 10px
+        }
     }
     
     &.mini-enter-active, &.mini-leave-active {

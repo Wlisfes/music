@@ -48,6 +48,11 @@ export const getSingerlist = param => {
     return xhr(param, `/top/artists`)
 }
 
+//获取歌手单曲列表
+export const getSingerMusicPlayList = param => {
+    return xhr(param, `/artists`)
+}
+
 //获取歌曲url地址
 export const getsongurl = param => {
     return xhr(param, `/song/url`)

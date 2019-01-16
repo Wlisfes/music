@@ -53,7 +53,7 @@ const router = new Router({
             ]
         },
         {
-            
+            //排行榜
             path: '/Rank',
             name: 'Rank',
             component: () => import('@/components/home/Rank'),
@@ -67,9 +67,18 @@ const router = new Router({
             ]
         },
         {
+            //歌手列表
             path: '/Singer',
             name: 'Singer',
-            component: () => import('@/components/home/Singer')
+            component: () => import('@/components/home/Singer'),
+            children:[
+                {
+                    //歌单详情
+                    path: ':id',
+                    name: 'Singerplay',
+                    component: () => import('@/components/chald/Singerplay')
+                }
+            ]
         },
         {
             //搜索
@@ -106,6 +115,10 @@ router.beforeEach((to, from ,next) => {
 
         if (to.name === "Songer") {
             router.replace('/Home')
+        }
+
+        if(to.name === "userSonger") {
+            router.replace('/user')
         }
 
     })

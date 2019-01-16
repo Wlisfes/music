@@ -24,10 +24,6 @@
                                         <span>(共{{playAll}}首)</span>
                                     </div>
                                 </div>
-                                <div class="playColl">
-                                    <i class="iconfont icon-shoucang"></i>
-                                    <span>收藏 ({{playlist.subscribedCount | star}})</span>
-                                </div>
                             </div>
                             <ul :class="{ 'active' : !fullScreen }">
                                 <li class="playli" @click="openMalplayer(ks, i)" v-for="(ks, i) in trackslist" :key="i">
@@ -74,7 +70,7 @@ export default {
             playlist: {},
             //共多少歌曲
             playAll: 0,
-            //歌单中的部分歌曲
+            //单曲列表
             trackslist: [],
         }
     },
@@ -94,32 +90,31 @@ export default {
         getrouterData() {
             this.id = this.$route.params.id
         },
-        //获取歌单详情数据
-        async _getplaylistdet() {
-            let res = await this.api.getplaylistdet({
+        //获取歌手单曲
+        async _getSingerMusicPlayList() {
+            let res = await this.api.getSingerMusicPlayList({
                 params: {
                     id: this.id
                 }
             })
 
             if (res.code == 200) {
-                let tracks = res.playlist.tracks
+                let tracks = res.hotSongs
 
                 this.playAll = tracks.length
-                this.playlist = res.playlist
+                this.playlist = res.artist
                 this.trackslist = tracks
-                this.header = res.playlist.name
-
+                this.header = res.artist.name
+                console.log(res)
             }
         },
         //点击歌曲播放
         openMalplayer(item, i) {
 
             console.log(item)
-
             this.set_playIndex(i)
             this.set_fullScreen(true)
-            this.set_playlist(this.playlist.tracks)
+            this.set_playlist(this.trackslist)
 
         },
         //bscrell组件滚动事件
@@ -140,7 +135,7 @@ export default {
     },
     created() {
         this.getrouterData()
-        this._getplaylistdet()
+        this._getSingerMusicPlayList()
         // console.log(this.SONGER_BACK_IMAGE)
     },
     components: {

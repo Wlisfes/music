@@ -20,7 +20,7 @@
 
         <div class="playlist">
             <div class="playlist-title" @click="openstar">
-                我创建的歌单
+                我收藏的歌单
                 <div class="icon" :style="stardeg">
                     <i class="iconfont icon-fanhui"></i>
                 </div>
