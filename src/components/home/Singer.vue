@@ -1,29 +1,33 @@
 <template>
     <div class="singer">
-        <bscorll class="wrapper"
-                 ref="wrapper" 
-                 :data="singers" 
-                 :listenScroll="listenScroll" 
-                 @scroll="Scroll">
-            <div class="wrapper-content" :class="{'active': !fullScreen && playIndex != -1}">
-                <ul class="listView" v-for="(si,i) in singers" :key="i">
-                    <li class="list-group">
-                        <h2 class="list-group-title" v-html="i == 0 ? si.title + '门' : si.title"></h2>
-                        <ul>
-                            <li class="list-group-item" @click="Singerplaylist(item)" v-for="(item,j) in si.items" :key="j">
-                                <img :src="item.avatar" alt="">
-                                <span class="group-name" v-html="item.name"></span>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </bscorll>
-        <div class="list-shortcut">
+        <div style="height: 100%;overflow: hidden;" v-if="singers.length > 0">
+            <bscorll class="wrapper"
+                    ref="wrapper" 
+                    :data="singers" 
+                    :listenScroll="listenScroll" 
+                    @scroll="Scroll">
+                <div class="wrapper-content" :class="{'active': !fullScreen && playIndex != -1}">
+                    <ul class="listView" v-for="(si,i) in singers" :key="i">
+                        <li class="list-group">
+                            <h2 class="list-group-title" v-html="i == 0 ? si.title + '门' : si.title"></h2>
+                            <ul>
+                                <li class="list-group-item" @click="Singerplaylist(item)" v-for="(item,j) in si.items" :key="j">
+                                    <img v-lazy="item.avatar" alt="">
+                                    <span class="group-name" v-html="item.name"></span>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </bscorll>
+        </div>
+        
+        <div class="list-shortcut" v-if="singers.length > 0">
             <ul>
                 <li class="item" v-for="(shor, u) in singers" :key="u">{{shor.title}}</li>
             </ul>
         </div>
+        <load v-if="singers.length == 0"></load>
         <router-view></router-view>
     </div>
 </template>
@@ -31,6 +35,7 @@
 <script>
 import pinyin from 'pinyin'
 import bscorll from '../base/bscorll'
+import load from '../base/load'
 import { mapMutations,mapGetters } from 'vuex'
 
 const HOT_NAME = '热'
@@ -83,8 +88,6 @@ export default {
                 })
 
                 this.singers = this._normalizeSinger(s)
-
-                console.log(this.singers)
             }
         },
         _normalizeSinger(list) {
@@ -153,7 +156,8 @@ export default {
         this._getSingerlist()
     },
     components: {
-        bscorll
+        bscorll,
+        load
     }
 }
 </script>

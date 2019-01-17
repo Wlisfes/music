@@ -1,65 +1,69 @@
 <template>
     <div class="Rank">
-        <bscorll class="wrapper"
-                 ref="wrapper" 
-                 :data="list">
-            <div class="wrapper-content" :class="{'active': !fullScreen && playIndex != -1}">
+        <div style="height: 100%;overflow: hidden;" v-if="list.length > 0">
+            <bscorll class="wrapper"
+                    ref="wrapper" 
+                    :data="list">
+                <div class="wrapper-content" :class="{'active': !fullScreen && playIndex != -1}">
 
-                <!-- 官方榜 -->
-                <div class="pelist" v-if="guanlist.length > 0">
-                    <div class="pelist-title"><h2>官方榜</h2></div>
-                    <div class="pelist-box" v-for="(item, i) in guanlist" :key="i" @click="selectPlayList(item)">
-                        <div class="pelist-image">
-                            <img :src="item.coverImgUrl" alt="" srcset="">
-                        </div>
-                        <div class="pelist-paly">
-                            <p v-for="(tr, j) in item.tracks" :key="j">{{ j+1 + '. ' + tr.first + '-' + tr.second}}</p>
-                        </div>
-
-                        <span class="prspan" v-html="item.updateFrequency"></span>
-                    </div>
-                </div>
-
-                <!-- 推荐榜 -->
-                <div class="mmen" v-if="mmenlist.length > 0">
-                    <div class="mmen-title"><h3>推荐榜</h3></div>
-                    <div class="mmen-list">
-                        <div class="mmen-list-view" v-for="(me,i) in mmenlist" :key="i" @click="selectPlayList(me)">
-                            <div class="mmen-list-view-image">
-                                <img v-lazy="me.coverImgUrl" :alt="me.name">
-                                <span class="prspan" v-html="me.updateFrequency"></span>
+                    <!-- 官方榜 -->
+                    <div class="pelist" v-if="guanlist.length > 0">
+                        <div class="pelist-title"><h2>官方榜</h2></div>
+                        <div class="pelist-box" v-for="(item, i) in guanlist" :key="i" @click="selectPlayList(item)">
+                            <div class="pelist-image">
+                                <img :src="item.coverImgUrl" alt="" srcset="">
                             </div>
-                            <div class="mmen-list-name">
-                                <p v-html="me.name"></p>
+                            <div class="pelist-paly">
+                                <p v-for="(tr, j) in item.tracks" :key="j">{{ j+1 + '. ' + tr.first + '-' + tr.second}}</p>
                             </div>
+
+                            <span class="prspan" v-html="item.updateFrequency"></span>
                         </div>
                     </div>
-                </div>
 
-                <!-- 更多榜单 -->
-                <div class="mmen" v-if="molist.length > 0">
-                    <div class="mmen-title"><h3>更多榜单</h3></div>
-                    <div class="mmen-list">
-                        <div class="mmen-list-view" v-for="(mo,i) in molist" :key="i" @click="selectPlayList(mo)">
-                            <div class="mmen-list-view-image">
-                                <img v-lazy="mo.coverImgUrl" :alt="mo.name">
-                                <span class="prspan" v-html="mo.updateFrequency"></span>
-                            </div>
-                            <div class="mmen-list-name">
-                                <p v-html="mo.name"></p>
+                    <!-- 推荐榜 -->
+                    <div class="mmen" v-if="mmenlist.length > 0">
+                        <div class="mmen-title"><h3>推荐榜</h3></div>
+                        <div class="mmen-list">
+                            <div class="mmen-list-view" v-for="(me,i) in mmenlist" :key="i" @click="selectPlayList(me)">
+                                <div class="mmen-list-view-image">
+                                    <img v-lazy="me.coverImgUrl" :alt="me.name">
+                                    <span class="prspan" v-html="me.updateFrequency"></span>
+                                </div>
+                                <div class="mmen-list-name">
+                                    <p v-html="me.name"></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-        </bscorll>
+                    <!-- 更多榜单 -->
+                    <div class="mmen" v-if="molist.length > 0">
+                        <div class="mmen-title"><h3>更多榜单</h3></div>
+                        <div class="mmen-list">
+                            <div class="mmen-list-view" v-for="(mo,i) in molist" :key="i" @click="selectPlayList(mo)">
+                                <div class="mmen-list-view-image">
+                                    <img v-lazy="mo.coverImgUrl" :alt="mo.name">
+                                    <span class="prspan" v-html="mo.updateFrequency"></span>
+                                </div>
+                                <div class="mmen-list-name">
+                                    <p v-html="mo.name"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </bscorll>
+        </div>
+        <load v-if="list.length == 0"></load>
         <router-view></router-view>
     </div>
 </template>
 
 <script>
 import bscorll from '../base/bscorll'
+import load from '../base/load'
 import { mapMutations,mapGetters } from 'vuex'
 export default {
     name: "Rank",
@@ -117,7 +121,8 @@ export default {
         this._getToplist()
     },
     components: {
-        bscorll
+        bscorll,
+        load
     }
 }
 </script>

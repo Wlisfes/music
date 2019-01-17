@@ -6,7 +6,7 @@
             <bscroll class="wrapper" 
             :data="recommendList">
                 <div class="wrapper-content">
-                    <div class="mmen-list">
+                    <div class="mmen-list" v-if="recommendList.length > 0">
                         <div @click="selectItem(Item)" class="mmen-list-view" v-for="(Item,i) in recommendList" :key="i">
                             <img v-lazy="Item.picUrl" :alt="Item.name">
                             <div class="mmen-list-name">
@@ -18,6 +18,8 @@
                             </p>
                         </div>
                     </div>
+
+                    <load v-if="recommendList.length == 0"></load>
                 </div>
             </bscroll>
             <router-view></router-view>
@@ -28,6 +30,7 @@
 <script>
 import bscroll from '../base/bscorll'
 import back from '../nav/back'
+import load from '../base/load'
 import { mapMutations } from 'vuex'
 export default {
     name: 'playList',
@@ -59,7 +62,7 @@ export default {
         }
     },
     created() {
-        this._getRecommendResource()
+        // this._getRecommendResource()
     },
     filters: {
         nau(val) {
@@ -70,7 +73,8 @@ export default {
     },
     components: {
         bscroll,
-        back
+        back,
+        load
     }
 }
 </script>

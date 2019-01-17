@@ -42,6 +42,7 @@
                             </ul>
                         </section>
 
+                        <load v-if="trackslist.length == 0"></load>
                     </div>
                 </div>
             </bscroll>
@@ -52,6 +53,7 @@
 
 <script>
 import bscroll from '../base/bscorll'
+import load from '../base/load'
 import { mapGetters,mapMutations } from 'vuex'
 
 export default {
@@ -139,7 +141,8 @@ export default {
         // console.log(this.SONGER_BACK_IMAGE)
     },
     components: {
-        bscroll
+        bscroll,
+        load
     }
 }
 </script>

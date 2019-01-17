@@ -48,6 +48,7 @@
                     </div>
                 </div>
                 
+                <load v-if="lizedList.length == 0 && bannerList.length == 0"></load>
             </div>
         </bscroll>
         <router-view></router-view>
@@ -56,6 +57,7 @@
 
 <script>
 import bscroll from '../base/bscorll'
+import load from '../base/load'
 import { mapMutations,mapGetters } from 'vuex'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
@@ -161,7 +163,8 @@ export default {
     components: {
         bscroll,
         swiper,
-        swiperSlide
+        swiperSlide,
+        load
     },
     watch: {
         userInfo() {
