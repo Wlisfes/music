@@ -112,11 +112,12 @@ export default {
 
 <style lang="stylus" scoped>
 .user-enter-active,.user-leave-active {
-    transition: all 0.3s
+    transition: all 0.3s;
 }
 
 .user-enter,.user-leave-to {
-    transform: translate3d(-100%, 0, 0)
+    transform: translate3d(-100%, 0, 0);
+    opacity 0
 }
 
 .user {

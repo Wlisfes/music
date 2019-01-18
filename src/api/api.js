@@ -63,6 +63,11 @@ export const getToplist = param => {
     return xhr(param, `/toplist/detail`)
 }
 
+//搜索
+export const getSearch = param => {
+    return xhr(param, `/search`)
+}
+
 
 
 
