@@ -6,7 +6,7 @@
                 stroke-dashoffset="263"/>
         </svg>
         <div class="icon">
-            <img id="IM" :src="musicplay ? play : pause" alt="" />
+            <img :src="musicplay ? play : pause" alt="" />
         </div>
     </div>
 </template>
@@ -41,8 +41,11 @@ export default {
 @import url('../../assets/css/playerIcon.css');
 .Round-progress {
     position relative
-    width 32px
-    height 32px
+    width 45px
+    height 45px
+    display flex
+    justify-content center
+    align-items center
 
     circle {
         stroke-width: 8px;
@@ -66,19 +69,17 @@ export default {
         top 0
         bottom 0
         margin auto
+        width 32px
+        height 32px
         display flex
         justify-content center
         align-items center
 
-        .iconfont {
-            font-size 26px
-
-            
+        >img {
+            width 20px;
         }
     }
 }
-#IM {
-    width 20px
-}
+
 </style>
 

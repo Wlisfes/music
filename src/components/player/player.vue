@@ -118,10 +118,14 @@ export default {
         //关闭全屏播放器
         backMiniplayer() {
             this.set_fullScreen(false)
+            history.back()
         },
         //打开全屏播放器
         openMiniplayer() {
             this.set_fullScreen(true)
+            // let url = window.location.href
+    
+            // history.pushState({page: 1}, "title 1",url.slice(url.lastIndexOf('/') + 1))
         },
         //获取歌曲url
         async _getsongurl() {
@@ -231,6 +235,11 @@ export default {
             //     this.$refs.audioRef.pause()
             //     this.set_musicplay(true)
             // }
+        },
+        fullScreen() {
+            if(this.fullScreen) {
+                history.pushState({page: 1}, "title 1","")
+            }
         }
     },
     mounted() {
@@ -502,8 +511,12 @@ export default {
         }
 
         .round {
-            width 30px
-            padding 0 10px
+            width 45px
+            height 45px
+            display flex
+            justify-content center
+            align-items center
+            position relative
         }
     }
     
