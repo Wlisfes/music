@@ -63,7 +63,7 @@ export default {
 .play-operators {
     display flex;
     align-items center;
-    height 40px;
+    height 50px;
 
     .play-flex {
         flex 1;
@@ -83,7 +83,7 @@ export default {
             padding 0 20px;
 
             .iconfont {
-                font-size 40px;
+                font-size 44px;
             }
         }
 

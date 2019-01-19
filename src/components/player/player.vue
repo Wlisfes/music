@@ -356,13 +356,13 @@ export default {
                 position: relative;
                 width: 100%;
                 height: 0;
-                padding-top: 80%;
+                padding-top: 70%;
 
                 .cd-wrapper {
                     position: absolute;
-                    left: 10%;
+                    left: 15%;
                     top: 0;
-                    width: 80%;
+                    width: 70%;
                     height: 100%;
 
                     .cd {
@@ -417,8 +417,8 @@ export default {
 
         .play-opera {
             position absolute;
-            bottom 50px;
-            height 90px;
+            bottom 25px;
+            height 100px;
             width 100%;
 
             .play-progress {

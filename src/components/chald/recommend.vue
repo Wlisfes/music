@@ -62,7 +62,7 @@ export default {
         }
     },
     created() {
-        // this._getRecommendResource()
+        this._getRecommendResource()
     },
     filters: {
         nau(val) {

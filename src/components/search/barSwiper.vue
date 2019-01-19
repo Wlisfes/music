@@ -3,24 +3,42 @@
         <header class="chihaeder">
             <div class="nav" :class="{ 'active' : Index == 0 }" @click="changeTo(0)"><span>单曲</span></div>
             <div class="nav" :class="{ 'active' : Index == 1 }" @click="changeTo(1)"><span>专辑</span></div>
-            <div class="nav" :class="{ 'active' : Index == 2 }" @click="changeTo(2)"><span>歌单</span></div>
-            <div class="nav" :class="{ 'active' : Index == 3 }" @click="changeTo(3)"><span>歌手</span></div>
+            <div class="nav" :class="{ 'active' : Index == 2 }" @click="changeTo(2)"><span>歌手</span></div>
+            <div class="nav" :class="{ 'active' : Index == 3 }" @click="changeTo(3)"><span>歌单</span></div>
             <div class="nav" :class="{ 'active' : Index == 4 }" @click="changeTo(4)"><span>用户</span></div>
         </header>
         <swiper class="swiper" ref="myswiper" :options="swiperOption">
             <swiper-slide>
-                <chinasingle :single="singleList" v-if="singleList.length > 0"></chinasingle>
+                <load v-if="load"></load>
+                <chinasingle v-else :single="singleList"></chinasingle>
             </swiper-slide>
-            <swiper-slide>2</swiper-slide>
-            <swiper-slide>3</swiper-slide>
-            <swiper-slide>4</swiper-slide>
-            <swiper-slide>5</swiper-slide>
+            <swiper-slide>
+                <load v-if="load"></load>
+                <album v-else :album="albumlist"></album>
+            </swiper-slide>
+            <swiper-slide>
+                <load v-if="load"></load>
+                <singer v-else :singer="singerlist"></singer>
+            </swiper-slide>
+            <swiper-slide>
+                <load v-if="load"></load>
+                <playlist v-else :play="songlist"></playlist>
+            </swiper-slide>
+            <swiper-slide>
+                <load v-if="load"></load>
+                <userlist v-else :user="userlist"></userlist>
+            </swiper-slide>
         </swiper>
     </div>
 </template>
 
 <script>
 import chinasingle from './chinasingle'
+import album from './Album'
+import singer from './singer'
+import playlist from './playlist'
+import userlist from './userlist'
+import load from '../base/load'
 let self = null
 
 export default {
@@ -40,14 +58,31 @@ export default {
                 on: {
                     slideChangeTransitionEnd: function(e) {
                         self.Index = this.activeIndex
-                        console.log(this.activeIndex)
                     }
                 }
             },
 
-            //单曲数据
-            singleList: []
+            //接口配置
+            type: 1,
+            limit: 30,
 
+            //数据加载中
+            load: true,
+
+            //单曲数据
+            singleList: [],
+
+            //专辑数据
+            albumlist: [],
+
+            //歌手数据
+            singerlist: [],
+
+            //歌单数据
+            songlist: [],
+
+            //用户数据
+            userlist: []
         }
     },
     beforeCreate() {
@@ -62,33 +97,116 @@ export default {
         //搜索请求
         async _getSearch() {
             if(!this.seval) {
+                this.singleList = []
+
+
                 return
             }
             let res = await this.api.getSearch({
                 params: {
-                    keywords: this.seval
+                    keywords: this.seval,
+                    type: this.type,
+                    limit: this.limit
                 }
             })
 
             if(res.code == this.code.ROK) {
+                //查看5大区域数据
                 switch (this.Index) {
                     case 0:
-                        this.singleList = res.result.songs
+                        //单曲数据
+                        if(res.result.songs && res.result.songs.length > 0) {
+                            this.singleList = res.result.songs
+                        } else {
+                            this.singleList = []
+                        }
+                        this.load = false
                         break;
-                
+
+                    case 1:
+                        //专辑数据
+                        if (res.result.albums && res.result.albums.length > 0) {
+                            this.albumlist = res.result.albums
+                        } else {
+                            this.albumlist = []
+                        }
+                        this.load = false
+                        break;
+
+                    case 2:
+                        //歌手数据
+                        if (res.result.artists && res.result.artists.length > 0) {
+                            this.singerlist = res.result.artists
+                        } else {
+                            this.singerlist = []
+                        }
+                        this.load = false
+                        break;
+
+                    case 3:
+                        //歌单数据
+                        if (res.result.playlists && res.result.playlists.length > 0) {
+                            this.songlist = res.result.playlists
+                        } else {
+                            this.songlist = []
+                        }
+                        this.load = false
+                        break;
+
+                    case 4:
+                        //用户数据
+                        if (res.result.mvs && res.result.mvs.length > 0) {
+                            this.userlist = res.result.mvs
+                        } else {
+                            this.userlist = []
+                        }
+                        this.load = false
+                        break;
                     default:
                         break;
-                }
+                } 
             }
         }
     },
     watch: {
         seval() {
             this._getSearch()
+            this.load = true
+        },
+        Index() {
+            switch (this.Index) {
+                case 0:
+                    this.type = 1
+                    this._getSearch()
+                    break;
+                case 1:
+                    this.type = 10
+                    this._getSearch()
+                    break;
+                case 2:
+                    this.type = 100
+                    this._getSearch()
+                    break;
+                case 3:
+                    this.type = 1000
+                    this._getSearch()
+                    break;
+                case 4:
+                    this.type = 1004
+                    this._getSearch()
+                    break;
+                default:
+                    break;
+            }
         }
     },
     components: {
-        chinasingle
+        chinasingle,
+        album,
+        singer,
+        playlist,
+        userlist,
+        load
     }
 }
 </script>

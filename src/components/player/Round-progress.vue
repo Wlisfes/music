@@ -6,7 +6,7 @@
                 stroke-dashoffset="263"/>
         </svg>
         <div class="icon">
-            <img :src="musicplay ? play : pause" alt="" />
+            <img :src="musicplay ? pause : play" alt="" />
         </div>
     </div>
 </template>
