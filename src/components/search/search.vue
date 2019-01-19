@@ -4,7 +4,7 @@
             <header class="se" @touchmove.prevent="move">
                 <div class="back" @click="back"><i class="iconfont icon-fanhui"></i></div>
                 <div class="sechinput">
-                    <input class="input-s" @input="_getSearch" v-model="Sevalue" type="text" value="" placeholder="搜索歌曲、歌手" />
+                    <input class="input-s" v-model="Sevalue" type="text" value="" placeholder="搜索歌曲、歌手" />
                     <div class="down" v-show="Sevalue" @click="EmptySearch">
                         <img :src="down" alt="" />
                     </div>
@@ -12,34 +12,14 @@
             </header>
             
             <div class="search-view">
-                <swiper class="swiper" ref="swiperEl" :options="swiperOption">
-                    <swiper-slide>1</swiper-slide>
-                    <swiper-slide>2</swiper-slide>
-                    <swiper-slide>3</swiper-slide>
-                    <swiper-slide>1</swiper-slide>
-                    <swiper-slide>2</swiper-slide>
-                    <swiper-slide>3</swiper-slide>
-                </swiper>
+                
+                <barswiper :seval="Sevalue" v-show="Sevalue"></barswiper>
 
 
 
 
+                
 
-
-
-
-
-
-
-
-                <!-- <bscorll class="wrapper" 
-                         ref="wrapper">
-                    <div class="wrapper-content">
-
-
-
-                    </div>
-                </bscorll> -->
             </div>
         </div>
     </transition>
@@ -48,71 +28,29 @@
 
 <script>
 import back from '../nav/back'
-import bscorll from './bscorll'
-import load from './load'
+import barswiper from './barswiper'
 const down = require('../../assets/image/down.png')
-let self = null
+
 export default {
     name: "search",
     data() {
         return {
             down: down,
-            Sevalue: '',
-            limit: 30,
-            type: 1,
-
-            //swiper配置
-            swiperIndex: 0,
-            swiperOption: {
-                observer:true,
-                observeParents:true,
-                on: {
-                    slideChangeTransitionEnd: function(e) {
-                        self.swiperIndex = this.activeIndex
-                    }
-                }
-            }
-        }
-    },
-    beforeCreate() {
-        self = this
-    },
-    watch: {
-        swiperIndex(){
-            console.log(this.swiperIndex)
+            Sevalue: '', 
         }
     },
     methods: {
         //清空搜索
         EmptySearch() {
             this.Sevalue = ""
-        },
-        swiperEvent(e) {
-            console.log(e)
-        },
-        //搜索
-        async _getSearch() {
-            if(!this.Sevalue) {
-                return
-            }
-            let res = await this.api.getSearch({
-                params: {
-                    keywords: this.Sevalue,
-                    limit: this.limit,
-                    type: this.type
-                }
-            })
-
-
-            console.log(res)
         }
+        
     },
     created() {
-        console.log(self)
+        
     },
     components: {
-        bscorll,
-        load
+        barswiper
     }
 }
 </script>
@@ -184,27 +122,7 @@ export default {
         height calc(100% - 46px)
         overflow hidden
         
-        .swiper {
-            height 100%
-        }
 
-
-
-
-
-
-
-
-
-
-
-        // .wrapper {
-        //     height 100%
-        //     overflow hidden
-        //     .wrapper-content {
-
-        //     }
-        // }
     }
 }
 

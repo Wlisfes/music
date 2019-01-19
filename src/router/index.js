@@ -84,7 +84,7 @@ const router = new Router({
             //搜索
             path: '/search',
             name: 'search',
-            component: () => import('@/components/base/search'),
+            component: () => import('@/components/search/search'),
         },
         {
             //用户页面

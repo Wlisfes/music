@@ -1,0 +1,110 @@
+<template>
+    <div class="sngle">
+        <bseroll :data="single" class="wrapper">
+            <div class="wrapper-content" :class="{'active': !fullScreen && playIndex != -1}">
+                <section class="playlist">
+                    <div class="listBox" v-for="(ops, i) in single" :key="i" @click="openplay(ops, i)">
+                        <div class="listBox-content">
+                            <h2 v-html="ops.name"></h2>
+                            <p>{{ops.artists[0].name + '-' + ops.album.name}}</p>
+                            <p>{{ops.alias[0]}}</p>
+                        </div>
+
+                        <div class="list-icon"></div>
+                    </div>
+                </section>
+            </div>
+        </bseroll>
+    </div>
+</template>
+
+<script>
+import bseroll from '../base/bscorll'
+import { mapGetters } from 'vuex'
+export default {
+    props: {
+        single: {
+            type: Array,
+            defautl: []
+        }
+    },
+    computed: {
+        ...mapGetters([
+            'fullScreen',
+            'playIndex'
+        ])
+    },
+    methods: {
+        openplay(ops, i) {
+            console.log(ops, i)
+        }
+    },
+    components: {
+        bseroll
+    }
+}
+</script>
+
+<style lang="stylus" scoped>
+.sngle {
+    height 100%
+
+    .wrapper {
+        height 100%
+        .wrapper-content {
+            .playlist {
+                padding-bottom .5rem
+                .listBox {
+                    overflow hidden
+                    padding .1rem .2rem
+                    position relative
+                    display flex
+                    flex-direction row
+
+                    .listBox-content {
+                        flex-grow 1
+                        overflow hidden
+                        >h2 {
+                            font-size 16px
+                            font-weight 500
+                            overflow hidden
+                            text-overflow ellipsis
+                            white-space nowrap
+                            color #000
+                        }
+                        >p {
+                            font-size 12px
+                            overflow hidden
+                            text-overflow ellipsis
+                            white-space nowrap
+                            color #999
+                        }
+                    }
+
+                    .list-icon {
+                        width 2.6rem
+                    }
+                    &:before {
+                        content ""
+                        width 100%
+                        height 1px
+                        position absolute
+                        border-top 1px solid #ccc8c8
+                        transform scaleY(0.5)
+                        left: 0
+                        bottom -1px
+                    }
+                }
+
+            }
+
+
+
+        }
+        >.active {
+            padding-bottom 60px
+        }
+    }
+}
+</style>
+
