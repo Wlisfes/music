@@ -93,13 +93,12 @@ export default {
         changeTo(n) {
             this.$refs.myswiper.swiper.slideTo(n)
             this.Index = n
+
         },
         //搜索请求
         async _getSearch() {
             if(!this.seval) {
                 this.singleList = []
-
-
                 return
             }
             let res = await this.api.getSearch({
@@ -129,7 +128,7 @@ export default {
                             //         subscribedCount: element.subscribedCount
                             //     })
                             // })
-                            this.singleList = cks
+                            this.singleList = tracks
                         } else {
                             this.singleList = []
                         }
@@ -187,7 +186,6 @@ export default {
             this._getSearch()
         },
         Index() {
-            // console.log(this.Index)
             switch (this.Index) {
                 case 0:
                     this.type = 1
