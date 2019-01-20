@@ -131,9 +131,10 @@ export default {
         async _getsongurl() {
             let item = this.playlist[this.playIndex]
 
-            this.musicImage = item.al.picUrl
-            this.musicName = item.name
-            this.singerName = item.ar[0].name
+            console.log(item)
+            this.musicImage = item.picUrl
+            this.musicName = item.alname
+            this.singerName = item.arname
 
             let res = await this.api.getsongurl({
                 params: {

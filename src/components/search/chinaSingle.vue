@@ -22,7 +22,7 @@
 <script>
 import bseroll from '../base/bscorll'
 import nota from '../base/nodata'
-import { mapGetters } from 'vuex'
+import { mapGetters,mapMutations } from 'vuex'
 export default {
     props: {
         single: {
@@ -37,8 +37,17 @@ export default {
         ])
     },
     methods: {
+        ...mapMutations([
+            'set_fullScreen',
+            'set_playlist',
+            'set_playIndex'
+        ]),
+        //选择某一首搜索单曲
         openplay(ops, i) {
             console.log(ops, i)
+            this.set_playIndex(i)
+            this.set_fullScreen(true)
+            this.set_playlist(this.single)
         }
     },
     components: {

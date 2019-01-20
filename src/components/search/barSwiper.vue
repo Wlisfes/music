@@ -9,23 +9,23 @@
         </header>
         <swiper class="swiper" ref="myswiper" :options="swiperOption">
             <swiper-slide>
-                <load v-if="load"></load>
+                <load v-if="load && Index == 0"></load>
                 <chinasingle v-else :single="singleList"></chinasingle>
             </swiper-slide>
             <swiper-slide>
-                <load v-if="load"></load>
+                <load v-if="load && Index == 1"></load>
                 <album v-else :album="albumlist"></album>
             </swiper-slide>
             <swiper-slide>
-                <load v-if="load"></load>
+                <load v-if="load && Index == 2"></load>
                 <singer v-else :singer="singerlist"></singer>
             </swiper-slide>
             <swiper-slide>
-                <load v-if="load"></load>
+                <load v-if="load && Index == 3"></load>
                 <playlist v-else :play="songlist"></playlist>
             </swiper-slide>
             <swiper-slide>
-                <load v-if="load"></load>
+                <load v-if="load && Index == 4"></load>
                 <userlist v-else :user="userlist"></userlist>
             </swiper-slide>
         </swiper>
@@ -116,7 +116,20 @@ export default {
                     case 0:
                         //单曲数据
                         if(res.result.songs && res.result.songs.length > 0) {
-                            this.singleList = res.result.songs
+                            // this.singleList = res.result.songs
+                            let tracks = res.result.songs
+                            let cks = []
+                            // tracks.forEach(element => {
+                            //     cks.push({
+                            //         picUrl: element.al.picUrl,
+                            //         id: element.id,
+                            //         name: element.name,
+                            //         arname: element.ar[0].name,
+                            //         alname: element.al.name,
+                            //         subscribedCount: element.subscribedCount
+                            //     })
+                            // })
+                            this.singleList = cks
                         } else {
                             this.singleList = []
                         }
@@ -170,29 +183,35 @@ export default {
     },
     watch: {
         seval() {
-            this._getSearch()
             this.load = true
+            this._getSearch()
         },
         Index() {
+            // console.log(this.Index)
             switch (this.Index) {
                 case 0:
                     this.type = 1
+                    this.load = true
                     this._getSearch()
                     break;
                 case 1:
                     this.type = 10
+                    this.load = true
                     this._getSearch()
                     break;
                 case 2:
                     this.type = 100
+                    this.load = true
                     this._getSearch()
                     break;
                 case 3:
                     this.type = 1000
+                    this.load = true
                     this._getSearch()
                     break;
                 case 4:
                     this.type = 1004
+                    this.load = true
                     this._getSearch()
                     break;
                 default:

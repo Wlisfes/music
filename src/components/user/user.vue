@@ -14,8 +14,7 @@
 
                     <userplaylist 
                     :userPlaylist="userPlaylist"
-                    :userStarlist="userStarlist" 
-                    @openuser="openuser" 
+                    :userStarlist="userStarlist"  
                     v-show="userInfo">
                     </userplaylist>
                     <author></author>
@@ -70,6 +69,7 @@ export default {
                 })
                 
                 if (res.code == this.code.ROK) {
+                    
                     let play = res.playlist
                     let userStarlist = [], userPlaylist = []
 
@@ -85,16 +85,11 @@ export default {
                     this.userStarlist = userStarlist
                 }
             }
-        },
-        //用户歌单打开 or 关闭
-        openuser(ops) {
-            console.log(ops)
         }
-      
     },
     created() {
         this._getUserPlaylist()
-        console.log(this.fullScreen)
+        
     },
     watch: {
         userInfo() {

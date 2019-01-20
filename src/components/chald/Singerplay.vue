@@ -30,7 +30,7 @@
                                     <div class="playli-In">{{i+1}}</div>
                                     <div class="playli-Ct">
                                         <h2>{{ks.name}}</h2>
-                                        <p>{{ks.ar[0].name +' - '+ ks.al.name}}</p>
+                                        <p>{{ks.arname +' - '+ ks.alname}}</p>
                                     </div>
                                     <div class="playli-Icon">
                                         
@@ -102,12 +102,25 @@ export default {
 
             if (res.code == 200) {
                 let tracks = res.hotSongs
+                let cks = []
 
                 this.playAll = tracks.length
                 this.playlist = res.artist
-                this.trackslist = tracks
                 this.header = res.artist.name
                 console.log(res)
+                //修改歌单数据结构
+                tracks.forEach(element => {
+                    cks.push({
+                        picUrl: element.al.picUrl,
+                        id: element.id,
+                        name: element.name,
+                        arname: element.ar[0].name,
+                        alname: element.al.name,
+                        subscribedCount: element.subscribedCount
+                    })
+                })
+
+                this.trackslist = cks
             }
         },
         //点击歌曲播放

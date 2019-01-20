@@ -34,7 +34,7 @@
                                     <div class="playli-In">{{i+1}}</div>
                                     <div class="playli-Ct">
                                         <h2>{{ks.name}}</h2>
-                                        <p>{{ks.ar[0].name +' - '+ ks.al.name}}</p>
+                                        <p>{{ks.arname +' - '+ ks.alname}}</p>
                                     </div>
                                     <div class="playli-Icon">
                                         
@@ -106,12 +106,25 @@ export default {
 
             if (res.code == 200) {
                 let tracks = res.playlist.tracks
+                let cks = []
 
                 this.playAll = tracks.length
                 this.playlist = res.playlist
-                this.trackslist = tracks
                 this.header = res.playlist.name
 
+                //修改歌单数据结构
+                tracks.forEach(element => {
+                    cks.push({
+                        picUrl: element.al.picUrl,
+                        id: element.id,
+                        name: element.name,
+                        arname: element.ar[0].name,
+                        alname: element.al.name,
+                        subscribedCount: element.subscribedCount
+                    })
+                })
+
+                this.trackslist = cks
             }
         },
         //点击歌曲播放
@@ -121,7 +134,7 @@ export default {
 
             this.set_playIndex(i)
             this.set_fullScreen(true)
-            this.set_playlist(this.playlist.tracks)
+            this.set_playlist(this.trackslist)
 
         },
         //bscrell组件滚动事件
