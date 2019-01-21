@@ -5,7 +5,7 @@
                 <section class="playlist" v-if="singer.length > 0">
                     <div class="listBox" v-for="(ops, i) in singer" :key="i">
                         <div class="listimage">
-                            <img v-lazy="ops.picUrl" alt="" srcset=""/>
+                            <img v-lazy="ops.img1v1Url" alt="" srcset=""/>
                         </div>
                         <div class="listBox-content">
                             <h2>

@@ -68,6 +68,14 @@ export const getSearch = param => {
     return xhr(param, `/search`)
 }
 
+//获取歌曲信息
+export const getSongDetail = param => {
+    return xhr(param, `/song/detail`)
+}
 
+//获取专辑歌单
+export const getAlbum = param => {
+    return xhr(param, `/album`)
+}
 
 

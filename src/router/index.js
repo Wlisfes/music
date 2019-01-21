@@ -85,6 +85,14 @@ const router = new Router({
             path: '/search',
             name: 'search',
             component: () => import('@/components/search/search'),
+            children:[
+                {
+                    //专辑详情
+                    path: 'album/:id',
+                    name: 'albumSonger',
+                    component: () => import('@/components/chald/Songer')
+                }
+            ]
         },
         {
             //用户页面

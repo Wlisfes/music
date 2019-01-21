@@ -12,13 +12,7 @@
             </header>
             
             <div class="search-view">
-                
                 <barswiper :seval="Sevalue" v-show="Sevalue"></barswiper>
-
-
-
-
-                
 
             </div>
         </div>
@@ -27,7 +21,6 @@
 
 
 <script>
-import back from '../nav/back'
 import barswiper from './barswiper'
 const down = require('../../assets/image/down.png')
 

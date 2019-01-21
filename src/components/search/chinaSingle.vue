@@ -3,11 +3,11 @@
         <bseroll :data="single" class="wrapper">
             <div class="wrapper-content" :class="{'active': !fullScreen && playIndex != -1}">
                 <section class="playlist" v-if="single.length > 0">
-                    <div class="listBox" v-for="(ops, i) in single" :key="i" @click="openplay(ops, i)">
+                    <div class="listBox" :class="{'active' : !ops.alias}" v-for="(ops, i) in single" :key="i" @click="openplay(ops, i)">
                         <div class="listBox-content">
                             <h2 v-html="ops.name"></h2>
-                            <p>{{ops.artists[0].name + '-' + ops.album.name}}</p>
-                            <p>{{ops.alias[0]}}</p>
+                            <p>{{ops.alname}}</p>
+                            <p>{{ops.alias}}</p>
                         </div>
 
                         <div class="list-icon"></div>
@@ -107,7 +107,9 @@ export default {
                         bottom -1px
                     }
                 }
-
+                >.active {
+                    padding .24rem .2rem
+                }
             }
 
 

@@ -9,23 +9,23 @@
         </header>
         <swiper class="swiper" ref="myswiper" :options="swiperOption">
             <swiper-slide>
-                <load v-if="load && Index == 0"></load>
+                <load v-if="singleListload && Index == 0"></load>
                 <chinasingle v-else :single="singleList"></chinasingle>
             </swiper-slide>
             <swiper-slide>
-                <load v-if="load && Index == 1"></load>
+                <load v-if="albumlistload && Index == 1"></load>
                 <album v-else :album="albumlist"></album>
             </swiper-slide>
             <swiper-slide>
-                <load v-if="load && Index == 2"></load>
+                <load v-if="singerlistload && Index == 2"></load>
                 <singer v-else :singer="singerlist"></singer>
             </swiper-slide>
             <swiper-slide>
-                <load v-if="load && Index == 3"></load>
+                <load v-if="songlistload && Index == 3"></load>
                 <playlist v-else :play="songlist"></playlist>
             </swiper-slide>
             <swiper-slide>
-                <load v-if="load && Index == 4"></load>
+                <load v-if="userlistload && Index == 4"></load>
                 <userlist v-else :user="userlist"></userlist>
             </swiper-slide>
         </swiper>
@@ -66,23 +66,27 @@ export default {
             type: 1,
             limit: 30,
 
-            //数据加载中
-            load: true,
 
             //单曲数据
             singleList: [],
+            singleListload: true,
 
             //专辑数据
             albumlist: [],
+            albumlistload: true,
 
             //歌手数据
             singerlist: [],
+            singerlistload: true,
 
             //歌单数据
             songlist: [],
+            songlistload: true,
 
             //用户数据
-            userlist: []
+            userlist: [],
+            userlistload: true
+
         }
     },
     beforeCreate() {
@@ -98,7 +102,7 @@ export default {
         //搜索请求
         async _getSearch() {
             if(!this.seval) {
-                this.singleList = []
+                
                 return
             }
             let res = await this.api.getSearch({
@@ -115,24 +119,53 @@ export default {
                     case 0:
                         //单曲数据
                         if(res.result.songs && res.result.songs.length > 0) {
-                            // this.singleList = res.result.songs
                             let tracks = res.result.songs
-                            let cks = []
-                            // tracks.forEach(element => {
-                            //     cks.push({
-                            //         picUrl: element.al.picUrl,
-                            //         id: element.id,
-                            //         name: element.name,
-                            //         arname: element.ar[0].name,
-                            //         alname: element.al.name,
-                            //         subscribedCount: element.subscribedCount
-                            //     })
-                            // })
-                            this.singleList = tracks
+                            let ids = ""
+                            tracks.forEach(element => {
+                                ids += `${element.id},`
+                            })
+
+                        //获取歌曲信息
+                        let kst = await await this.api.getSongDetail({
+                                params: {
+                                    ids: ids.substring(0, ids.length -1)
+                                }
+                            })
+
+                            //重新处理数据结构
+                            if (kst.code === this.code.ROK) {
+                                let kstsongs = kst.songs
+                                let kstplay = []
+                                kstsongs.forEach(element => {
+                                    kstplay.push({
+                                        picUrl: element.al.picUrl,
+                                        id: element.id,
+                                        name: element.name,
+                                        arname: element.ar[0].name,
+                                        alname: element.al.name,
+                                        alias: element.alia[0] || 'OccupyArtists'
+                                    })
+                                })
+                                this.singleList = kstplay
+                            } else {
+                                //歌曲数据获取不成功直接把搜索内容渲染
+                                let cks = []
+                                tracks.forEach(element => {
+                                    cks.push({
+                                        picUrl: element.artists[0].img1v1Url,
+                                        id: element.id,
+                                        name: element.artists[0].name+ '-' +element.album.name,
+                                        arname: element.artists[0].name,
+                                        alname: element.name,
+                                        alias: element.alias[0]
+                                    })
+                                })
+                                this.singleList = cks
+                            }
                         } else {
                             this.singleList = []
                         }
-                        this.load = false
+                        this.singleListload = false
                         break;
 
                     case 1:
@@ -142,7 +175,7 @@ export default {
                         } else {
                             this.albumlist = []
                         }
-                        this.load = false
+                        this.albumlistload = false
                         break;
 
                     case 2:
@@ -152,7 +185,7 @@ export default {
                         } else {
                             this.singerlist = []
                         }
-                        this.load = false
+                        this.singerlistload = false
                         break;
 
                     case 3:
@@ -162,7 +195,7 @@ export default {
                         } else {
                             this.songlist = []
                         }
-                        this.load = false
+                        this.songlistload = false
                         break;
 
                     case 4:
@@ -172,7 +205,7 @@ export default {
                         } else {
                             this.userlist = []
                         }
-                        this.load = false
+                        this.userlistload = false
                         break;
                     default:
                         break;
@@ -182,34 +215,33 @@ export default {
     },
     watch: {
         seval() {
-            this.load = true
+            this.singleListload = true,
+            this.albumlistload = true,
+            this.singerlistload = true,
+            this.songlistload = true,
+            this.userlistload = true
             this._getSearch()
         },
         Index() {
             switch (this.Index) {
                 case 0:
                     this.type = 1
-                    this.load = true
                     this._getSearch()
                     break;
                 case 1:
                     this.type = 10
-                    this.load = true
                     this._getSearch()
                     break;
                 case 2:
                     this.type = 100
-                    this.load = true
                     this._getSearch()
                     break;
                 case 3:
                     this.type = 1000
-                    this.load = true
                     this._getSearch()
                     break;
                 case 4:
                     this.type = 1004
-                    this.load = true
                     this._getSearch()
                     break;
                 default:

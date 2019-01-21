@@ -3,7 +3,7 @@
         <bseroll :data="album" class="wrapper">
             <div class="wrapper-content" :class="{'active': !fullScreen && playIndex != -1}">
                 <section class="playlist" v-if="album.length > 0">
-                    <div class="listBox" v-for="(ops, i) in album" :key="i">
+                    <div class="listBox" @click="openAlbum(ops)" v-for="(ops, i) in album" :key="i">
                         <div class="listimage">
                             <img v-lazy="ops.picUrl" alt="" srcset=""/>
                         </div>
@@ -22,7 +22,7 @@
 <script>
 import bseroll from '../base/bscorll'
 import nota from '../base/nodata'
-import { mapGetters } from 'vuex'
+import { mapGetters,mapMutations } from 'vuex'
 export default {
     props: {
         album: {
@@ -35,6 +35,17 @@ export default {
             'fullScreen',
             'playIndex'
         ])
+    },
+    methods: {
+        ...mapMutations([
+            'set_songer_back_image'
+        ]),
+        //打开专辑详情
+        openAlbum(ops) {
+            console.log(ops)
+            this.$router.push({ path: `/search/album/${ops.id}` })
+            this.set_songer_back_image(ops.picUrl)
+        }
     },
     components: {
         bseroll,
