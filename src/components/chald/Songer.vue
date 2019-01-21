@@ -46,7 +46,8 @@
                             </ul>
                         </section>
 
-                        <load v-if="trackslist.length == 0"></load>
+                        <load v-if="trackslist.length == 0 && load"></load>
+                        <note v-else></note>
                     </div>
                 </div>
             </bscroll>
@@ -58,6 +59,7 @@
 <script>
 import bscroll from '../base/bscorll'
 import load from '../base/load'
+import note from '../base/nodata'
 import { mapGetters,mapMutations } from 'vuex'
 
 export default {
@@ -78,6 +80,8 @@ export default {
             playAll: 0,
             //歌单中的部分歌曲
             trackslist: [],
+            //加载中
+            load: true
         }
     },
     computed: {
@@ -125,6 +129,7 @@ export default {
                 })
 
                 this.trackslist = cks
+                this.load = false
             }
         },
         //点击歌曲播放
@@ -160,7 +165,8 @@ export default {
     },
     components: {
         bscroll,
-        load
+        load,
+        note
     }
 }
 </script>

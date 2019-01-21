@@ -15,6 +15,7 @@
                 <barswiper :seval="Sevalue" v-show="Sevalue"></barswiper>
 
             </div>
+            <router-view></router-view>
         </div>
     </transition>
 </template>

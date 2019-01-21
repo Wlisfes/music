@@ -88,8 +88,20 @@ const router = new Router({
             children:[
                 {
                     //专辑详情
-                    path: 'album/:id',
+                    path: 'ablum/:id',
                     name: 'albumSonger',
+                    component: () => import('@/components/chald/Songer')
+                },
+                {
+                    //歌手详情
+                    path: 'singer/:id',
+                    name: 'searchSingerplay',
+                    component: () => import('@/components/chald/Singerplay')
+                },
+                {
+                    //歌单详情
+                    path: 'searchplay/:id',
+                    name: 'searchSonger',
                     component: () => import('@/components/chald/Songer')
                 }
             ]

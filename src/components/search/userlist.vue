@@ -9,7 +9,7 @@
                         </div>
                         <div class="listBox-content">
                             <h2>
-                                {{ops.arTransName}}
+                                {{ops.name}}
                                 <span v-if="ops.artistName">{{ '（'+ops.artistName+'）' }}</span>
                             </h2>
                         </div>

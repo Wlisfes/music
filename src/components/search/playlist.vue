@@ -3,7 +3,7 @@
         <bseroll :data="play" class="wrapper">
             <div class="wrapper-content" :class="{'active': !fullScreen && playIndex != -1}">
                 <section class="playlist" v-if="play.length > 0">
-                    <div class="listBox" v-for="(ops, i) in play" :key="i">
+                    <div class="listBox" @click="selectPlayList(ops)" v-for="(ops, i) in play" :key="i">
                         <div class="listimage">
                             <img v-lazy="ops.coverImgUrl" alt="" srcset=""/>
                         </div>
@@ -26,7 +26,7 @@
 <script>
 import bseroll from '../base/bscorll'
 import nota from '../base/nodata'
-import { mapGetters } from 'vuex'
+import { mapGetters,mapMutations } from 'vuex'
 export default {
     props: {
         play: {
@@ -39,6 +39,16 @@ export default {
             'fullScreen',
             'playIndex'
         ])
+    },
+    methods: {
+        ...mapMutations([
+            'set_songer_back_image'
+        ]),
+        //选择歌单
+        selectPlayList(ops) {
+            this.$router.push({ path: `/search/searchplay/${ops.id}` })
+            this.set_songer_back_image(ops.coverImgUrl)
+        },
     },
     filters: {
         nau(val) {

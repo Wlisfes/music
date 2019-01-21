@@ -43,7 +43,7 @@ export default {
         //打开专辑详情
         openAlbum(ops) {
             console.log(ops)
-            this.$router.push({ path: `/search/album/${ops.id}` })
+            this.$router.push({ path: `/search/ablum/${ops.id}` })
             this.set_songer_back_image(ops.picUrl)
         }
     },
