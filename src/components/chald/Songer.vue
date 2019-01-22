@@ -47,7 +47,7 @@
                         </section>
 
                         <load v-if="trackslist.length == 0 && load"></load>
-                        <note v-else></note>
+                        <note v-if="trackslist.length == 0 && !load"></note>
                     </div>
                 </div>
             </bscroll>
