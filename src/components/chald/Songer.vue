@@ -102,33 +102,41 @@ export default {
         },
         //获取歌单详情数据
         async _getplaylistdet() {
-            let res = await this.api.getplaylistdet({
-                params: {
-                    id: this.id
-                }
-            })
-
-            if (res.code == 200) {
-                let tracks = res.playlist.tracks
-                let cks = []
-
-                this.playAll = tracks.length
-                this.playlist = res.playlist
-                this.header = res.playlist.name
-
-                //修改歌单数据结构
-                tracks.forEach(element => {
-                    cks.push({
-                        picUrl: element.al.picUrl,
-                        id: element.id,
-                        name: element.name,
-                        arname: element.ar[0].name,
-                        alname: element.al.name,
-                        subscribedCount: element.subscribedCount
-                    })
+            try {
+                let res = await this.api.getplaylistdet({
+                    params: {
+                        id: this.id
+                    }
                 })
 
-                this.trackslist = cks
+                    if (res.code && res.code == 200) {
+                        let tracks = res.playlist.tracks
+                        let cks = []
+
+                        this.playAll = tracks.length
+                        this.playlist = res.playlist
+                        this.header = res.playlist.name
+
+                        //修改歌单数据结构
+                        tracks.forEach(element => {
+                            cks.push({
+                                picUrl: element.al.picUrl,
+                                id: element.id,
+                                name: element.name,
+                                arname: element.ar[0].name,
+                                alname: element.al.name,
+                                subscribedCount: element.subscribedCount
+                            })
+                        })
+
+                    this.trackslist = cks
+                    this.load = false
+                } else {
+                    this.trackslist = []
+                    this.load = false
+                }
+            } catch (error) {
+                this.trackslist = []
                 this.load = false
             }
         },

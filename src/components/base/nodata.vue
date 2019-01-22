@@ -11,7 +11,7 @@ export default {
     props: {
         text: {
             type: String,
-            default: '哈哈！没有搜索结果，傻逼了吧！'
+            default: '哈哈！没有结果，傻逼了吧！'
         }
     },
     data() {
