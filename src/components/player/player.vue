@@ -31,7 +31,7 @@
                 <!-- 底部操作区域 start -->
                 <div class="play-opera">
                     <div class="play-progress">
-                        <play-slide></play-slide>
+                        <play-slide :Tion="duraTion" :Time="currentTime"></play-slide>
                     </div>
 
                     <play-operators
