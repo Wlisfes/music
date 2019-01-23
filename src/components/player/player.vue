@@ -30,7 +30,9 @@
 
                 <!-- 底部操作区域 start -->
                 <div class="play-opera">
-                    <div class="play-progress"></div>
+                    <div class="play-progress">
+                        <play-slide></play-slide>
+                    </div>
 
                     <play-operators
                      @playpo="pause"
@@ -59,7 +61,10 @@
                         <div class="desc" v-html="singerName"></div>
                     </div>
                     <div class="round">
-                        <round-progress @playc="pause"></round-progress>
+                        <round-progress 
+                            @playc="pause" 
+                            :Time="CalcTime">
+                        </round-progress>
                     </div>
                 </div>
             </div>
@@ -67,7 +72,11 @@
         <!-- 迷你播放器 end -->
 
 
-        <audio ref="audioRef" @ended="musicEnd"></audio>
+        <audio ref="audioRef" 
+            @ended="musicEnd" 
+            @timeupdate="musicTime" 
+            @durationchange="musicTionChange">
+        </audio>
     </div>
 </template>
 
@@ -75,6 +84,7 @@
 import { mapGetters,mapMutations } from 'vuex'
 import playoperators from './play-operators'
 import Roundprogress from './Round-progress'
+import playslide from './play-slide'
 
 export default {
     data() {
@@ -88,7 +98,17 @@ export default {
             //歌曲url
             musicUrl: '',
 
-            loops: false
+            loops: false,
+
+
+            //music播放进度
+            currentTime: 0,
+
+            //music总时长
+            duraTion: 0,
+
+            //SVG使用的进度
+            CalcTime: 314
         }
     },
     computed: {
@@ -106,7 +126,8 @@ export default {
     },
     components: {
         'play-operators': playoperators,
-        'round-progress': Roundprogress
+        'round-progress': Roundprogress,
+        'play-slide': playslide
     },
     methods: {
         ...mapMutations([
@@ -123,9 +144,6 @@ export default {
         //打开全屏播放器
         openMiniplayer() {
             this.set_fullScreen(true)
-            // let url = window.location.href
-    
-            // history.pushState({page: 1}, "title 1",url.slice(url.lastIndexOf('/') + 1))
         },
         //获取歌曲url
         async _getsongurl() {
@@ -192,10 +210,19 @@ export default {
         musicEnd() {
             this.$refs.audioRef.pause()
             this.set_musicplay(false)
-            
 
             this._musicmode()
             console.log('播放完毕')
+        },
+        //歌曲播放循环事件 计算进度
+        musicTime(e) {
+            this.currentTime = e.target.currentTime
+            
+            this.CalcTime = 314 - (this.currentTime / this.duraTion) * 314
+        },
+        //加载足够长度可触发  获取总时长
+        musicTionChange(e) {
+            this.duraTion = e.target.duration
         },
         //播放 or 暂停 
         pause() {
@@ -425,7 +452,7 @@ export default {
             .play-progress {
                 display flex;
                 align-items center;
-                width 80%;
+                width 94%;
                 margin 0 auto;
                 height 50px;
             }

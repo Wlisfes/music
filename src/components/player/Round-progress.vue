@@ -3,7 +3,7 @@
         <svg :width="32" :height="32" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <circle class="progress-background" r="50" cx="50" cy="50" fill="transparent"/>
         <circle class="progress-bar" r="50" cx="50" cy="50" fill="transparent" stroke-dasharray="314"
-                stroke-dashoffset="263"/>
+                :stroke-dashoffset="Time"/>
         </svg>
         <div class="icon">
             <img :src="musicplay ? pause : play" alt="" />
@@ -18,6 +18,12 @@ const play = require('../../assets/image/play.png')
 const pause = require('../../assets/image/pause.png')
 
 export default {
+    props: {
+        Time: {
+            type: Number,
+            default: 314
+        }
+    },
     data() {
         return {
             play: play,
@@ -27,7 +33,8 @@ export default {
     computed: {
         ...mapGetters([
             'musicplay',
-        ])
+        ]),
+
     },
     methods: {
         playc() {
