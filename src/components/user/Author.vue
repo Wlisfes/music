@@ -35,7 +35,7 @@ export default {
                 Text: '确定退出当前账号吗？',
                 success(res) {
                     self.set_userInfo('')
-                    // localStorage.removeItem('userInfo_')
+                    localStorage.removeItem('userInfo_')
                 }
             })
 
