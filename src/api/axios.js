@@ -3,7 +3,7 @@
 import axios from 'axios'
 import logo from './logo'
 
-axios.defaults.baseURL='http://47.106.97.205:3000'
+axios.defaults.baseURL='http://music.lipinghua.com'
 axios.defaults.withCredentials=true
 
 
