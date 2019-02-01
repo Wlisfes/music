@@ -2,7 +2,7 @@
     <transition name="login">
         <div class="login">
             <div class="userlogin">
-                <img :src="userInfo ? userInfo.avatarUrl : 'http://lisfes.cn/public/image/akari.jpg'" alt="" srcset="">
+                <img :src="userInfo ? userInfo.avatarUrl : 'http://music.lipinghua.com/image/akari.jpg'" alt="" srcset="">
                 
                 <div class="back" @click="back"></div>
             </div>
@@ -95,7 +95,7 @@ export default {
     right 0
     bottom 0
     top 0
-    background-image url('http://lisfes.cn/public/image/user_login_bg.jpg')
+    background-image url('http://music.lipinghua.com/image/user_login_bg2.jpg')
     background-repeat no-repeat
     background-size cover
     display flex
@@ -118,12 +118,12 @@ export default {
         }
 
         .back {
-            width 1.4rem
-            height 1.4rem
+            width 30px
+            height 30px
             position absolute
-            left 0
-            top 0
-            background-image url('http://lisfes.cn/public/image/ic_close.png')
+            left 10px
+            top 10px
+            background-image url('../../assets/image/down.png')
             background-repeat no-repeat
             background-size cover
         }

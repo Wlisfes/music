@@ -7,7 +7,7 @@
                 <div class="wrapper-content" :class="{'active': !fullScreen}">
                     <div class="userbox" @click="openLogin">
                         <div class="userTitle">
-                            <img :src="userInfo ? userInfo.avatarUrl : 'http://lisfes.cn/public/image/akari.jpg'" alt="" srcset="">
+                            <img :src="userInfo ? userInfo.avatarUrl : 'http://music.lipinghua.com/image/akari.jpg'" alt="" srcset="">
                             <p class="userName" v-html="userInfo ? userInfo.nickname : '未登录'"></p>
                         </div>
                     </div>

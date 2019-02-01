@@ -173,6 +173,7 @@ export default {
                         justify-content center
                         padding-right .4rem
                         position relative
+                        overflow hidden
 
                         >p {
                             overflow hidden
