@@ -39,3 +39,8 @@ npm run build   打包
 - vue-awesome-swiper（轮播组件）
 - better-scroll（区域滚动库）
 - pinyin（一个汉字转拼音的插件）
+
+# 界面欣赏
+
+#### 首页
+![首页](https://raw.githubusercontent.com/Wlisfes/music/master/Screenshot/1.png)
