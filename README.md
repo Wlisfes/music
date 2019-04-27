@@ -9,7 +9,7 @@
 
 >  [在线演示地址](http://lisfes.cn)
 
-> 本项目由 [👉Wlisfes](https://github.com/Wlisfes) 开发，您可以随意修改、使用！！
+> 本项目由 [Wlisfes](https://github.com/Wlisfes) 开发，您可以随意修改、使用！！
 
 # 如何安装与使用
 
