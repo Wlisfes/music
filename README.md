@@ -42,5 +42,5 @@ npm run build   打包
 
 # 界面欣赏
 
-#### 首页
-![首页](https://raw.githubusercontent.com/Wlisfes/music/master/Screenshot/1.png)
+#### iPhone6 Plus预览
+![ ](https://raw.githubusercontent.com/Wlisfes/music/master/Screenshot/20.png)
