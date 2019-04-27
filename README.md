@@ -44,3 +44,30 @@ npm run build   打包
 
 #### iPhone6 Plus预览
 ![ ](https://raw.githubusercontent.com/Wlisfes/music/master/Screenshot/20.png)
+![ ](https://raw.githubusercontent.com/Wlisfes/music/master/Screenshot/21.png)
+![ ](https://raw.githubusercontent.com/Wlisfes/music/master/Screenshot/22.png)
+![ ](https://raw.githubusercontent.com/Wlisfes/music/master/Screenshot/24.png)
+![ ](https://raw.githubusercontent.com/Wlisfes/music/master/Screenshot/25.png)
+![ ](https://raw.githubusercontent.com/Wlisfes/music/master/Screenshot/26.png)
+
+
+## 更新说明
+
+### V1.2（2019.04.27）
+- 新增搜索页面
+
+### V1.1（2019.04.27）
+- 打包发布
+- 新增排行榜页面
+- 新增歌手页面
+- 新增播放器页面
+
+### V1.0（2019.02.04）
+- 项目初始化提交
+
+
+## 其他说明
+- 个人练手项目 不喜勿喷
+- 如果您喜欢该作品，您可以点右上角 "Star" "Fork" 表示支持 谢谢！
+- 如有问题请直接在 Issues 中提，或者您发现问题并有非常好的解决方案，欢迎 PR
+
